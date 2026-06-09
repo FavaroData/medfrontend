@@ -1066,3 +1066,18 @@
     background-color: var(--bg-primary);
     color: var(--text-primary);
 }
+
+/* DataTable sort arrows — increase opacity so they're visible on dark headers */
+[data-theme="dark"] table.dataTable thead th.sorting::before,
+[data-theme="dark"] table.dataTable thead th.sorting::after,
+[data-theme="dark"] table.dataTable thead th.sorting_asc::before,
+[data-theme="dark"] table.dataTable thead th.sorting_asc::after,
+[data-theme="dark"] table.dataTable thead th.sorting_desc::before,
+[data-theme="dark"] table.dataTable thead th.sorting_desc::after {
+    opacity: 0.5;
+}
+
+[data-theme="dark"] table.dataTable thead th.sorting_asc::before,
+[data-theme="dark"] table.dataTable thead th.sorting_desc::after {
+    opacity: 0.9;
+}

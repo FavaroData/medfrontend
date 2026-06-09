@@ -544,7 +544,7 @@ body.sidebar-folded .main-content {
 }
 
 #imagerWorklistTable th {
-    text-align: center;
+    text-align: left;
     padding: 8px 4px;
 }
 
@@ -583,78 +583,8 @@ body.sidebar-folded .main-content {
     text-overflow: ellipsis;
 }
 
-/* Specific column width controls for imager table - Step 1 with Atend. column */
-/* Column 1: Data */
-#imagerWorklistTable th:nth-child(1),
-#imagerWorklistTable td:nth-child(1) {
-    width: 9%;
-    min-width: 80px;
-    max-width: 110px;
-}
-
-/* Column 2: Atend. */
-#imagerWorklistTable th:nth-child(2),
-#imagerWorklistTable td:nth-child(2) {
-    width: 6%;
-    min-width: 50px;
-    max-width: 70px;
-}
-
-/* Column 3: Prescr. */
-#imagerWorklistTable th:nth-child(3),
-#imagerWorklistTable td:nth-child(3) {
-    width: 6%;
-    min-width: 60px;
-    max-width: 80px;
-}
-
-/* Column 4: Paciente */
-#imagerWorklistTable th:nth-child(4),
-#imagerWorklistTable td:nth-child(4) {
-    width: 24%;
-    min-width: 200px;
-    max-width: none; /* Remove max-width restriction for patient names */
-}
-
-/* Column 5: Nasc. */
-#imagerWorklistTable th:nth-child(5),
-#imagerWorklistTable td:nth-child(5) {
-    width: 8%;
-    min-width: 80px;
-    max-width: 100px;
-}
-
-/* Column 6: CPF */
-#imagerWorklistTable th:nth-child(6),
-#imagerWorklistTable td:nth-child(6) {
-    width: 9%;
-    min-width: 100px;
-    max-width: 120px;
-}
-
-/* Column 7: Procedimento */
-#imagerWorklistTable th:nth-child(7),
-#imagerWorklistTable td:nth-child(7) {
-    width: 17%;
-    min-width: 150px;
-    max-width: 220px;
-}
-
-/* Column 8: Médico */
-#imagerWorklistTable th:nth-child(8),
-#imagerWorklistTable td:nth-child(8) {
-    width: 14%;
-    min-width: 120px;
-    max-width: 180px;
-}
-
-/* Column 9: Processo */
-#imagerWorklistTable th:nth-child(9),
-#imagerWorklistTable td:nth-child(9) {
-    width: 8%;
-    min-width: 80px;
-    max-width: 120px;
-}
+/* Column widths are managed by DataTables via columns[].width + table-layout: fixed.
+   nth-child overrides removed — they were for a deprecated 8-column layout. */
 
 /* Text truncation for patient names and long content */
 #imagerWorklistTable .text-truncate {
@@ -662,19 +592,6 @@ body.sidebar-folded .main-content {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-/* Ensure patient name column specifically handles long names (now 4th column) */
-#imagerWorklistTable td:nth-child(4) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Prescription number formatting (now 3rd column) */
-#imagerWorklistTable td:nth-child(3) {
-    font-family: 'Courier New', monospace;
-    font-weight: 500;
 }
 
 /* Status badge styling */
