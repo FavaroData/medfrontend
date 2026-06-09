@@ -195,6 +195,13 @@
                     console.log('[dev-override] DataTable setTimeout disparado, chamando success...');
                     if (typeof opts.success === 'function') opts.success(data);
                     d.resolve(data);
+                    // diagnóstico DOM após 200ms
+                    setTimeout(function() {
+                        var tbody = document.querySelector('#imagerWorklistTable tbody');
+                        var rows = tbody ? tbody.querySelectorAll('tr') : [];
+                        console.log('[dev-override] DOM após draw: tbody existe?', !!tbody, '| tr count:', rows.length);
+                        if (tbody) console.log('[dev-override] tbody innerHTML (100 chars):', tbody.innerHTML.substring(0, 100));
+                    }, 200);
                 }, 0);
                 return d.promise();
             }
