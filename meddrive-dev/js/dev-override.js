@@ -182,7 +182,6 @@
             const reqUrl = (typeof url === 'string') ? url : (opts.url || '');
 
             if (isDataTable(reqUrl)) {
-                console.log('[dev-override] DataTable ajax interceptado:', reqUrl, 'data:', opts.data, 'success?', typeof opts.success);
                 const d = jQuery.Deferred();
                 const dataParams = opts.data || {};
                 const queryStr = typeof dataParams === 'string' ? dataParams
@@ -190,18 +189,9 @@
                 const sep = reqUrl.includes('?') ? '&' : '?';
                 const fullUrl = queryStr ? reqUrl + sep + queryStr : reqUrl;
                 const data = buildDatatableData(fullUrl);
-                console.log('[dev-override] DataTable mock data:', data.recordsTotal, 'rows, stepFilter=', new URL(fullUrl, 'http://localhost').searchParams.get('stepFilter'));
                 setTimeout(function () {
-                    console.log('[dev-override] DataTable setTimeout disparado, chamando success...');
                     if (typeof opts.success === 'function') opts.success(data);
                     d.resolve(data);
-                    // diagnóstico DOM após 200ms
-                    setTimeout(function() {
-                        var tbody = document.querySelector('#imagerWorklistTable tbody');
-                        var rows = tbody ? tbody.querySelectorAll('tr') : [];
-                        console.log('[dev-override] DOM após draw: tbody existe?', !!tbody, '| tr count:', rows.length);
-                        if (tbody) console.log('[dev-override] tbody innerHTML (100 chars):', tbody.innerHTML.substring(0, 100));
-                    }, 200);
                 }, 0);
                 return d.promise();
             }
@@ -234,20 +224,15 @@
         enumerable: true,
         get() {
             return function safeCleanup() {
-                console.log('[dev-override] cleanupImagerDashboard chamado, _imagerCleanup:', typeof _imagerCleanup);
                 try {
                     if (typeof _imagerCleanup === 'function') _imagerCleanup();
-                    console.log('[dev-override] cleanup OK');
                 } catch (e) {
                     console.warn('[dev-override] cleanupImagerDashboard silenciado:', e.message);
                 }
             };
         },
         set(fn) {
-            console.log('[dev-override] cleanupImagerDashboard definido:', typeof fn);
             _imagerCleanup = fn;
         }
     });
-
-    console.log('[dev-override] v4 ativo — diagnóstico ligado');
 })();

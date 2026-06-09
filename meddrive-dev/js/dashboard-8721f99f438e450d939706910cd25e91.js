@@ -142,7 +142,7 @@ $(document).ready(function() {
         
         // Clean up any existing dashboard state before loading new content
         if (typeof cleanupImagerDashboard === 'function') {
-            cleanupImagerDashboard();
+            try { cleanupImagerDashboard(); } catch (e) { console.warn('[dashboard] cleanup error silenciado:', e.message); }
         }
 
         try {
