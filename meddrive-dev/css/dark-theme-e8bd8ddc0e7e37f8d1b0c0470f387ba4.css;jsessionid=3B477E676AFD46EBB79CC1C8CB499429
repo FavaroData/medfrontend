@@ -1,0 +1,1068 @@
+/* ========================================
+   Meddrive Dashboard - Dark Theme
+   Sistema de Cores Otimizado v3.0
+
+   Inspirado no VS Code Dark+ Theme
+   Características:
+   - Contraste WCAG AA/AAA garantido
+   - Cores sutis mas semanticamente reconhecíveis
+   - Confortável para uso prolongado
+   - True dark (não apenas cores invertidas)
+   - Equilíbrio entre funcionalidade e conforto visual
+   ======================================== */
+
+[data-theme="dark"] {
+    /* ========================================
+       CORES PRIMÁRIAS (Brand - VS Code inspired)
+       ======================================== */
+    --color-primary: #569cd6;           /* VS Code blue - suave e profissional */
+    --color-primary-light: #6eb4e6;     /* Azul claro para hover */
+    --color-primary-dark: #4a8cc2;      /* Azul escuro para contraste */
+
+    /* ========================================
+       CORES SEMÂNTICAS (VS Code inspired - sutis mas reconhecíveis)
+       ======================================== */
+
+    /* Sucesso - Verde suave mas visível */
+    --color-success: #4ec9b0;           /* Verde-azulado VS Code - Contraste 5.2:1 ✓ */
+    --color-success-light: #6bd4be;     /* Verde claro para hover */
+    --color-success-dark: #42ac93;      /* Verde escuro para borders */
+
+    /* Aviso - Amarelo-laranja suave */
+    --color-warning: #dcdcaa;           /* Amarelo suave VS Code - Contraste 9.8:1 ✓ */
+    --color-warning-light: #e8e8bb;     /* Amarelo claro */
+    --color-warning-dark: #c5c58f;      /* Amarelo escuro */
+
+    /* Erro - Vermelho-coral suave */
+    --color-danger: #f48771;            /* Vermelho-coral suave - Contraste 5.8:1 ✓ */
+    --color-danger-light: #f69e8a;      /* Vermelho claro */
+    --color-danger-dark: #d97058;       /* Vermelho escuro */
+
+    /* Informação - Azul ciano suave */
+    --color-info: #4fc1ff;              /* Azul ciano VS Code - Contraste 7.1:1 ✓ */
+    --color-info-light: #6fd1ff;        /* Azul claro */
+    --color-info-dark: #3fa8db;         /* Azul escuro */
+
+    /* ========================================
+       ESCALA DE CINZAS (VS Code inspired)
+       10 tons estruturados para dark mode
+       ======================================== */
+    --gray-50: #1e1e1e;                 /* Background principal VS Code */
+    --gray-100: #252526;                /* Background cards/elevated */
+    --gray-200: #2d2d30;                /* Sidebar/sections */
+    --gray-300: #3e3e42;                /* Borders suaves */
+    --gray-400: #505050;                /* Borders normais */
+    --gray-500: #858585;                /* Ícones desabilitados - Contraste 3.8:1 ✓ */
+    --gray-600: #9d9d9d;                /* Texto secundário - Contraste 5.1:1 ✓ */
+    --gray-700: #cccccc;                /* Texto normal VS Code - Contraste 7.9:1 ✓ */
+    --gray-800: #d4d4d4;                /* Texto principal VS Code - Contraste 8.6:1 ✓ */
+    --gray-900: #e8e8e8;                /* Texto brilhante/destaque - Contraste 10.2:1 ✓ */
+
+    /* ========================================
+       BACKGROUNDS (VS Code palette)
+       ======================================== */
+    --bg-body: var(--gray-50);          /* Background principal (#1e1e1e) */
+    --bg-primary: var(--gray-100);      /* Cards, modais (#252526) */
+    --bg-secondary: var(--gray-200);    /* Sections, sidebar (#2d2d30) */
+    --bg-tertiary: var(--gray-300);     /* Divisores, inputs (#3e3e42) */
+    --bg-elevated: var(--gray-200);     /* Elementos elevados */
+    --bg-sidebar: var(--gray-200);      /* Sidebar/Navbar (#2d2d30) */
+
+    /* ========================================
+       TEXTOS (VS Code inspired)
+       ======================================== */
+    --text-primary: var(--gray-800);    /* Texto principal (#d4d4d4) */
+    --text-secondary: var(--gray-600);  /* Labels, legendas (#9d9d9d) */
+    --text-muted: var(--gray-500);      /* Hints, placeholders (#858585) - Contraste 3.8:1 ✓ */
+    --text-bright: var(--gray-900);     /* Texto em destaque (#e8e8e8) */
+    --text-light: var(--gray-900);      /* Texto em fundos escuros */
+    --text-inverse: var(--gray-900);    /* Texto invertido */
+    --text-label: var(--gray-700);      /* Labels de formulários (#cccccc) */
+
+    /* ========================================
+       BORDERS (VS Code inspired)
+       ======================================== */
+    --border-primary: var(--gray-300);  /* Borders padrão (#3e3e42) */
+    --border-secondary: var(--gray-400);/* Borders normais (#505050) */
+    --border-focus: var(--color-primary);/* Border em foco (azul VS Code) */
+
+    /* ========================================
+       LINKS (VS Code inspired)
+       ======================================== */
+    --link-color: var(--color-primary);         /* #569cd6 */
+    --link-hover-color: var(--color-primary-light);  /* #6eb4e6 */
+
+    /* ========================================
+       SHADOWS (sutis em dark mode)
+       ======================================== */
+    --shadow-sm: rgba(0, 0, 0, 0.2);    /* Sombra suave */
+    --shadow-md: rgba(0, 0, 0, 0.3);    /* Sombra média */
+    --shadow-lg: rgba(0, 0, 0, 0.4);    /* Sombra forte */
+    --shadow-color: var(--shadow-md);
+    --shadow-color-hover: var(--shadow-lg);
+    --shadow-card: var(--shadow-sm);
+
+    /* ========================================
+       STATUS BADGES
+       NOTA: Definições movidas para styles.css (cores unificadas para ambos os temas)
+       ======================================== */
+
+    /* ========================================
+       SEMÂNTICAS EXPANDIDAS (Botões, Alerts - VS Code inspired)
+       Usando cores base ajustadas para dark
+       ======================================== */
+
+    /* Success Variants */
+    --success-color: var(--color-success);  /* #4ec9b0 */
+    --success-bg: var(--color-success);
+    --success-text: #1e1e1e;  /* Texto escuro em botão claro */
+    --success-border: var(--color-success-dark);
+
+    /* Warning Variants */
+    --warning-color: var(--color-warning);  /* #dcdcaa */
+    --warning-bg: var(--color-warning);
+    --warning-text: #1e1e1e;  /* Texto escuro em botão claro */
+    --warning-border: var(--color-warning-dark);
+
+    /* Danger Variants */
+    --danger-color: var(--color-danger);  /* #f48771 */
+    --danger-bg: var(--color-danger);
+    --danger-text: #1e1e1e;  /* Texto escuro em botão claro */
+    --danger-border: var(--color-danger-dark);
+
+    /* Info Variants */
+    --info-color: var(--color-info);  /* #4fc1ff */
+    --info-bg: var(--color-info);
+    --info-text: #1e1e1e;  /* Texto escuro em botão claro */
+    --info-border: var(--color-info-dark);
+
+    /* Primary Variants */
+    --primary-color: var(--bg-sidebar);
+    --secondary-color: var(--color-primary);  /* #569cd6 */
+    --accent-color: var(--gray-200);
+
+    /* ========================================
+       TABLES (VS Code inspired - confortável para leitura)
+       ======================================== */
+    --table-bg: #1e1e1e;                /* Fundo de linhas - mais escuro para melhor contraste */
+    --table-hover-bg: #2d2d30;          /* Hover state sutil */
+    --table-border-color: var(--gray-300);  /* Borders sutis (#3e3e42) */
+    --table-header-bg: #252526;         /* Header mais claro - invertido para melhor hierarquia visual */
+    --table-header-text: var(--gray-800);  /* Texto claro (#d4d4d4) */
+
+    /* ========================================
+       FORMS (VS Code inspired)
+       ======================================== */
+    --input-bg: var(--gray-300);  /* #3e3e42 - input background */
+    --input-border: var(--border-primary);  /* #3e3e42 */
+    --input-text: var(--text-primary);  /* #d4d4d4 */
+    --input-placeholder: var(--text-muted);  /* #858585 */
+    --input-focus-border: var(--border-focus);  /* #569cd6 */
+    --input-focus-shadow: rgba(86, 156, 214, 0.3);  /* VS Code blue com alpha */
+
+    /* ========================================
+       MODALS (VS Code inspired)
+       ======================================== */
+    --modal-bg: var(--bg-primary);  /* #252526 */
+    --modal-header-bg: var(--bg-secondary);  /* #2d2d30 */
+    --modal-border: var(--border-primary);  /* #3e3e42 */
+    --modal-backdrop: rgba(0, 0, 0, 0.7);
+
+    /* ========================================
+       ALERTS (VS Code inspired - sutis e reconhecíveis)
+       ======================================== */
+    --alert-success-bg: #2a3a35;
+    --alert-success-text: var(--color-success);  /* #4ec9b0 */
+    --alert-success-border: #3a8070;
+
+    --alert-warning-bg: #3a3a2a;
+    --alert-warning-text: var(--color-warning);  /* #dcdcaa */
+    --alert-warning-border: #8b8b6a;
+
+    --alert-danger-bg: #3a2a2a;
+    --alert-danger-text: var(--color-danger);  /* #f48771 */
+    --alert-danger-border: #9a5a4a;
+
+    --alert-info-bg: #2a3a3a;
+    --alert-info-text: var(--color-info);  /* #4fc1ff */
+    --alert-info-border: #4a7a9a;
+
+    /* ========================================
+       LOADING/OVERLAY (VS Code inspired)
+       ======================================== */
+    --loading-overlay-bg: rgba(30, 30, 30, 0.9);  /* VS Code background com alpha */
+
+    /* ========================================
+       UTILITÁRIOS
+       ======================================== */
+    --border-radius: 0.375rem;          /* 6px - padrão arredondado */
+    --border-radius-sm: 0.25rem;        /* 4px - pequeno */
+    --border-radius-lg: 0.5rem;         /* 8px - grande */
+    --focus-ring: 0 0 0 3px var(--input-focus-shadow);
+
+    /* Compatibilidade com código legado */
+    --gray-light: var(--gray-200);
+    --gray-medium: var(--gray-500);
+    --gray-dark: var(--gray-800);
+}
+
+/* ========================================
+   COMPONENTES DARK MODE
+   Overrides específicos para tema escuro
+   ======================================== */
+
+/* Body & Layout */
+[data-theme="dark"] body {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .main-content {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+}
+
+/* Cards */
+[data-theme="dark"] .card {
+    background-color: var(--bg-primary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+    box-shadow: none;
+}
+
+[data-theme="dark"] .card-header {
+    background-color: var(--bg-secondary);
+    border-bottom-color: var(--border-primary);
+    color: var(--text-bright);
+}
+
+[data-theme="dark"] .card-body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .card-footer {
+    background-color: var(--bg-secondary);
+    border-top-color: var(--border-primary);
+}
+
+/* Statistics Cards */
+[data-theme="dark"] .stats-card {
+    background-color: var(--bg-primary);
+    border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .stats-card.active {
+    border-color: var(--border-focus) !important;
+}
+
+/* Tables */
+[data-theme="dark"] .table {
+    color: var(--text-primary);
+    border-color: var(--table-border-color);
+    /* Override Bootstrap 5 internal table CSS custom properties */
+    --bs-table-color: var(--text-primary);
+    --bs-table-bg: var(--table-bg);
+    --bs-table-border-color: var(--table-border-color);
+    --bs-table-striped-bg: var(--table-hover-bg);
+    --bs-table-striped-color: var(--text-primary);
+    --bs-table-hover-bg: var(--table-hover-bg);
+    --bs-table-hover-color: var(--text-primary);
+    --bs-table-active-bg: var(--table-hover-bg);
+    --bs-table-active-color: var(--text-primary);
+}
+
+[data-theme="dark"] .table thead th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
+}
+
+[data-theme="dark"] .table tbody tr {
+    background-color: var(--table-bg);
+    border-color: var(--table-border-color);
+}
+
+[data-theme="dark"] .table-hover tbody tr:hover {
+    background-color: var(--table-hover-bg);
+}
+
+[data-theme="dark"] .table td,
+[data-theme="dark"] .table th {
+    border-color: var(--table-border-color);
+    color: var(--text-primary);
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .table-dark thead {
+    background-color: var(--table-header-bg) !important;
+}
+
+/* Neutralize Bootstrap .table-light in dark theme */
+[data-theme="dark"] .table-light {
+    --bs-table-color: var(--table-header-text) !important;
+    --bs-table-bg: var(--table-header-bg) !important;
+    --bs-table-border-color: var(--table-border-color) !important;
+}
+
+/* Table Title Sections */
+[data-theme="dark"] .table-title-section {
+    background-color: var(--bg-secondary);
+    border-left-color: var(--color-primary);
+}
+
+[data-theme="dark"] .table-title-section h5 {
+    color: var(--text-bright);
+}
+
+[data-theme="dark"] .table-title-section i {
+    color: var(--gray-500);
+}
+
+/* Forms & Inputs */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-text);
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+    background-color: var(--bg-tertiary);
+    border-color: var(--input-focus-border);
+    color: var(--input-text);
+    box-shadow: var(--focus-ring);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: var(--input-placeholder);
+}
+
+[data-theme="dark"] .form-label {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .form-text {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .form-check-input {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+}
+
+[data-theme="dark"] .form-check-input:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .form-check-label {
+    color: var(--text-primary);
+}
+
+/* Input Groups */
+[data-theme="dark"] .input-group-text {
+    background-color: var(--bg-tertiary);
+    border-color: var(--input-border);
+    color: var(--text-secondary);
+}
+
+/* Modals */
+[data-theme="dark"] .modal-content {
+    background-color: var(--modal-bg);
+    border: 1px solid var(--modal-border);
+}
+
+[data-theme="dark"] .modal-header {
+    background-color: var(--modal-header-bg);
+    border-bottom: 1px solid var(--modal-border);
+    color: var(--text-bright);
+}
+
+[data-theme="dark"] .modal-title {
+    color: var(--text-bright);
+}
+
+[data-theme="dark"] .modal-body {
+    background-color: var(--modal-bg);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-footer {
+    background-color: var(--modal-header-bg);
+    border-top: 1px solid var(--modal-border);
+}
+
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+[data-theme="dark"] .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Buttons - VS Code inspired colors */
+[data-theme="dark"] .btn-primary {
+    background-color: var(--color-primary) !important;  /* #569cd6 */
+    border-color: var(--color-primary) !important;
+    color: #1e1e1e !important;  /* Texto escuro em botão claro */
+}
+
+[data-theme="dark"] .btn-primary:hover {
+    background-color: var(--color-primary-light) !important;  /* #6eb4e6 */
+    border-color: var(--color-primary-light) !important;
+}
+
+[data-theme="dark"] .btn-info {
+    background-color: var(--color-info) !important;  /* #4fc1ff */
+    border-color: var(--color-info) !important;
+    color: #1e1e1e !important;  /* Texto escuro em botão claro */
+}
+
+[data-theme="dark"] .btn-info:hover {
+    background-color: var(--color-info-light) !important;  /* #6fd1ff */
+    border-color: var(--color-info-light) !important;
+}
+
+[data-theme="dark"] .btn-success {
+    background-color: var(--color-success) !important;  /* #4ec9b0 */
+    border-color: var(--color-success) !important;
+    color: #1e1e1e !important;  /* Texto escuro em botão claro */
+}
+
+[data-theme="dark"] .btn-success:hover {
+    background-color: var(--color-success-light) !important;  /* #6bd4be */
+    border-color: var(--color-success-light) !important;
+}
+
+[data-theme="dark"] .btn-warning {
+    background-color: var(--color-warning) !important;  /* #dcdcaa */
+    border-color: var(--color-warning) !important;
+    color: #1e1e1e !important;  /* Texto escuro em botão claro */
+}
+
+[data-theme="dark"] .btn-warning:hover {
+    background-color: var(--color-warning-light) !important;  /* #e8e8bb */
+    border-color: var(--color-warning-light) !important;
+}
+
+[data-theme="dark"] .btn-danger {
+    background-color: var(--color-danger) !important;  /* #f48771 */
+    border-color: var(--color-danger) !important;
+    color: #1e1e1e !important;  /* Texto escuro em botão claro */
+}
+
+[data-theme="dark"] .btn-danger:hover {
+    background-color: var(--color-danger-light) !important;  /* #f69e8a */
+    border-color: var(--color-danger-light) !important;
+}
+
+/* Outline Buttons - VS Code inspired */
+[data-theme="dark"] .btn-outline-primary {
+    color: var(--color-primary);  /* #569cd6 */
+    border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .btn-outline-primary:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #1e1e1e;
+}
+
+[data-theme="dark"] .btn-outline-secondary {
+    color: var(--text-secondary);  /* #9d9d9d */
+    border-color: var(--border-primary);  /* #3e3e42 */
+}
+
+[data-theme="dark"] .btn-outline-secondary:hover {
+    background-color: var(--bg-tertiary);  /* #3e3e42 */
+    color: var(--text-primary);  /* #d4d4d4 */
+}
+
+[data-theme="dark"] .btn-outline-info {
+    color: var(--color-info);  /* #4fc1ff */
+    border-color: var(--color-info);
+}
+
+[data-theme="dark"] .btn-outline-info:hover {
+    background-color: var(--color-info);
+    color: #1e1e1e;
+}
+
+[data-theme="dark"] .btn-outline-success {
+    color: var(--color-success);  /* #4ec9b0 */
+    border-color: var(--color-success);
+}
+
+[data-theme="dark"] .btn-outline-success:hover {
+    background-color: var(--color-success);
+    color: #1e1e1e;
+}
+
+[data-theme="dark"] .btn-outline-warning {
+    color: var(--color-warning);  /* #dcdcaa */
+    border-color: var(--color-warning);
+}
+
+[data-theme="dark"] .btn-outline-warning:hover {
+    background-color: var(--color-warning);
+    color: #1e1e1e;
+}
+
+[data-theme="dark"] .btn-outline-danger {
+    color: var(--color-danger);  /* #f48771 */
+    border-color: var(--color-danger);
+}
+
+[data-theme="dark"] .btn-outline-danger:hover {
+    background-color: var(--color-danger);
+    color: #1e1e1e;
+}
+
+/* Alerts */
+[data-theme="dark"] .alert {
+    border-width: 1px;
+}
+
+[data-theme="dark"] .alert-success {
+    background-color: var(--alert-success-bg);
+    border-color: var(--alert-success-border);
+    color: var(--alert-success-text);
+}
+
+[data-theme="dark"] .alert-warning {
+    background-color: var(--alert-warning-bg);
+    border-color: var(--alert-warning-border);
+    color: var(--alert-warning-text);
+}
+
+[data-theme="dark"] .alert-danger {
+    background-color: var(--alert-danger-bg);
+    border-color: var(--alert-danger-border);
+    color: var(--alert-danger-text);
+}
+
+[data-theme="dark"] .alert-info {
+    background-color: var(--alert-info-bg);
+    border-color: var(--alert-info-border);
+    color: var(--alert-info-text);
+}
+
+/* Status Badges */
+[data-theme="dark"] .status-badge {
+    font-weight: 600;
+    border-radius: 0.2rem;
+    border: none !important;
+}
+
+[data-theme="dark"] .status-pending,
+[data-theme="dark"] .status-ready {
+    background-color: var(--status-pending-bg) !important;
+    color: var(--status-pending-text) !important;
+}
+
+[data-theme="dark"] .status-processing {
+    background-color: var(--status-processing-bg) !important;
+    color: var(--status-processing-text) !important;
+}
+
+[data-theme="dark"] .status-processed,
+[data-theme="dark"] .status-completed,
+[data-theme="dark"] .status-success {
+    background-color: var(--status-completed-bg) !important;
+    color: var(--status-completed-text) !important;
+}
+
+[data-theme="dark"] .status-failed {
+    background-color: var(--status-failed-bg) !important;
+    color: var(--status-failed-text) !important;
+}
+
+[data-theme="dark"] .status-incomplete {
+    background-color: var(--status-incomplete-bg) !important;
+    color: var(--status-incomplete-text) !important;
+}
+
+[data-theme="dark"] .status-skipped {
+    background-color: var(--status-skipped-bg) !important;
+    color: var(--status-skipped-text) !important;
+}
+
+/* Remove status badge styles from DataTables */
+[data-theme="dark"] table .status-badge,
+[data-theme="dark"] .table .status-badge,
+[data-theme="dark"] .dataTable .status-badge,
+[data-theme="dark"] table .status-ready,
+[data-theme="dark"] table .status-pending,
+[data-theme="dark"] table .status-processed,
+[data-theme="dark"] table .status-completed,
+[data-theme="dark"] table .status-success,
+[data-theme="dark"] table .status-processing,
+[data-theme="dark"] table .status-failed,
+[data-theme="dark"] table .status-incomplete,
+[data-theme="dark"] table .status-skipped,
+[data-theme="dark"] .table .status-ready,
+[data-theme="dark"] .table .status-pending,
+[data-theme="dark"] .table .status-processed,
+[data-theme="dark"] .table .status-completed,
+[data-theme="dark"] .table .status-success,
+[data-theme="dark"] .table .status-processing,
+[data-theme="dark"] .table .status-failed,
+[data-theme="dark"] .table .status-incomplete,
+[data-theme="dark"] .table .status-skipped {
+    background-color: transparent !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    min-width: auto !important;
+    color: var(--text-primary) !important;
+}
+
+/* Status Indicator */
+[data-theme="dark"] .status-indicator .active {
+    background-color: var(--color-success);
+}
+
+[data-theme="dark"] .status-indicator .inactive {
+    background-color: var(--color-danger);
+}
+
+/* Badges - VS Code inspired */
+[data-theme="dark"] .badge {
+    color: #1e1e1e;  /* Texto escuro em badges claros */
+}
+
+[data-theme="dark"] .badge.bg-primary {
+    background-color: var(--color-primary) !important;  /* #569cd6 */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .badge.bg-secondary {
+    background-color: var(--gray-500) !important;  /* #858585 */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .badge.bg-success {
+    background-color: var(--color-success) !important;  /* #4ec9b0 */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .badge.bg-warning {
+    background-color: var(--color-warning) !important;  /* #dcdcaa */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .badge.bg-danger {
+    background-color: var(--color-danger) !important;  /* #f48771 */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .badge.bg-info {
+    background-color: var(--color-info) !important;  /* #4fc1ff */
+    color: #1e1e1e !important;
+}
+
+/* Navbar */
+[data-theme="dark"] .navbar {
+    background: var(--bg-sidebar) !important;
+    border-bottom: 1px solid var(--border-primary);
+}
+
+/* Sidebar */
+[data-theme="dark"] .sidebar {
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-primary);
+}
+
+/* Dropdowns */
+[data-theme="dark"] .dropdown-menu {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-item:hover,
+[data-theme="dark"] .dropdown-item:focus {
+    background-color: var(--bg-elevated);
+    color: var(--text-bright);
+}
+
+[data-theme="dark"] .dropdown-divider {
+    border-top-color: var(--border-primary);
+}
+
+/* Pagination - VS Code inspired */
+[data-theme="dark"] .page-item .page-link {
+    background-color: var(--bg-secondary);  /* #2d2d30 */
+    border-color: var(--border-primary);  /* #3e3e42 */
+    color: var(--color-primary);  /* #569cd6 */
+}
+
+[data-theme="dark"] .page-item.active .page-link {
+    background-color: var(--color-primary);  /* #569cd6 */
+    border-color: var(--color-primary);
+    color: #1e1e1e;
+}
+
+[data-theme="dark"] .page-item.disabled .page-link {
+    background-color: var(--bg-secondary);  /* #2d2d30 */
+    border-color: var(--border-primary);  /* #3e3e42 */
+    color: var(--text-muted);  /* #858585 */
+}
+
+[data-theme="dark"] .page-item .page-link:hover {
+    background-color: var(--bg-elevated);  /* #2d2d30 */
+    color: var(--text-bright);  /* #e8e8e8 */
+}
+
+/* DataTables */
+[data-theme="dark"] .dataTables_wrapper {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .dataTables_filter input,
+[data-theme="dark"] .dataTables_length select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-text);
+}
+
+[data-theme="dark"] .dataTables_info,
+[data-theme="dark"] .dataTables_paginate {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] table.dataTable tbody tr {
+    background-color: var(--table-bg) !important;
+}
+
+[data-theme="dark"] table.dataTable.table-hover tbody tr:hover {
+    background-color: var(--table-hover-bg) !important;
+}
+
+[data-theme="dark"] table.dataTable tbody td {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] table.dataTable thead th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--table-header-text) !important;
+    border-color: var(--table-border-color) !important;
+    padding: 8px 8px;
+    vertical-align: middle !important;
+}
+
+[data-theme="dark"] table.dataTable.table thead.table-dark th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--table-header-text) !important;
+}
+
+/* Remove margin/border below thead in all DataTables */
+[data-theme="dark"] .dataTables_wrapper .dataTables_scrollHead {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_scrollHeadInner {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper table.dataTable thead {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper table.dataTable thead th {
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper .dataTables_scrollBody {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper table.dataTable {
+    margin-bottom: 0 !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper table.dataTable thead tr {
+    margin-bottom: 0 !important;
+}
+
+[data-theme="dark"] .dataTables_wrapper table.dataTable tbody tr:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Loading Overlay */
+[data-theme="dark"] .loading-overlay {
+    background: var(--loading-overlay-bg);
+}
+
+[data-theme="dark"] .spinner-border {
+    color: var(--color-primary);  /* #569cd6 - VS Code blue */
+}
+
+/* Filter Sections */
+[data-theme="dark"] .filter-section {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+}
+
+/* Tree View */
+[data-theme="dark"] .tree-row {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .tree-child {
+    background-color: var(--bg-primary);
+}
+
+[data-theme="dark"] .tree-row:hover,
+[data-theme="dark"] .tree-child:hover {
+    background-color: var(--bg-elevated);
+}
+
+/* Breadcrumb */
+[data-theme="dark"] .breadcrumb {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .breadcrumb-item + .breadcrumb-item::before {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .breadcrumb-item.active {
+    color: var(--text-secondary);
+}
+
+/* List Groups */
+[data-theme="dark"] .list-group-item {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .list-group-item:hover {
+    background-color: var(--bg-elevated);
+}
+
+[data-theme="dark"] .list-group-item.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+}
+
+/* Tabs - Navigation Tabs */
+[data-theme="dark"] .nav-tabs {
+    border-bottom: 2px solid var(--border-primary);
+}
+
+[data-theme="dark"] .nav-tabs .nav-link {
+    color: var(--text-secondary) !important;
+    border-color: transparent;
+    padding: 12px 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+[data-theme="dark"] .nav-tabs .nav-link:hover {
+    border-color: var(--border-primary);
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .nav-tabs .nav-link.active {
+    color: var(--text-bright) !important;
+    background-color: var(--bg-primary);
+    border-color: var(--border-primary) var(--border-primary) var(--bg-primary);
+    font-weight: 600;
+}
+
+/* Progress Bars */
+[data-theme="dark"] .progress {
+    background-color: var(--bg-tertiary);
+}
+
+/* Tooltips */
+[data-theme="dark"] .tooltip-inner {
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before,
+[data-theme="dark"] .bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: var(--bg-elevated);
+}
+
+/* Text Utilities */
+[data-theme="dark"] .text-muted {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .text-dark {
+    color: var(--text-primary) !important;
+}
+
+/* Background Utilities - VS Code inspired */
+[data-theme="dark"] .bg-light {
+    background-color: var(--bg-secondary) !important;  /* #2d2d30 */
+    color: var(--text-primary) !important;  /* #d4d4d4 */
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: var(--bg-primary) !important;  /* #252526 */
+    color: var(--text-primary) !important;  /* #d4d4d4 */
+}
+
+[data-theme="dark"] .bg-primary {
+    background-color: var(--color-primary) !important;  /* #569cd6 */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .bg-info {
+    background-color: var(--color-info) !important;  /* #4fc1ff */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .bg-success {
+    background-color: var(--color-success) !important;  /* #4ec9b0 */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .bg-warning {
+    background-color: var(--color-warning) !important;  /* #dcdcaa */
+    color: #1e1e1e !important;
+}
+
+[data-theme="dark"] .bg-danger {
+    background-color: var(--color-danger) !important;  /* #f48771 */
+    color: #1e1e1e !important;
+}
+
+/* Border Utilities */
+[data-theme="dark"] .border {
+    border-color: var(--border-primary) !important;
+}
+
+/* ========================================
+   ACTION BUTTONS - ICON ONLY (No Box)
+   Botões de ação com apenas ícones, sem caixa
+   ======================================== */
+
+[data-theme="dark"] .btn-icon-only {
+    background: none !important;
+    border: none !important;
+    padding: 6px 8px !important;
+    min-width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: none !important;
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .btn-icon-only:hover {
+    color: var(--text-primary) !important;
+    transform: scale(1.15);
+}
+
+[data-theme="dark"] .btn-icon-only i {
+    font-size: 1.5rem;
+}
+
+[data-theme="dark"] .btn-icon-only.btn-sm i {
+    font-size: 1.25rem;
+}
+
+/* Tree toggle for expandable rows */
+[data-theme="dark"] .tree-toggle {
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================================
+   DELETE/TRASH ICON STYLING
+   Ícones de excluir em vermelho em todas as tabelas
+   ======================================== */
+
+/* Trash icons in tables - always red */
+[data-theme="dark"] table .fa-trash,
+[data-theme="dark"] table .fa-trash-alt,
+[data-theme="dark"] .table .fa-trash,
+[data-theme="dark"] .table .fa-trash-alt {
+    color: var(--color-danger) !important;
+}
+
+/* Trash icons in buttons - maintain red on hover */
+[data-theme="dark"] .btn .fa-trash,
+[data-theme="dark"] .btn .fa-trash-alt,
+[data-theme="dark"] button .fa-trash,
+[data-theme="dark"] button .fa-trash-alt {
+    color: var(--color-danger) !important;
+}
+
+/* Print Styles - Force light theme for printing */
+@media print {
+    [data-theme="dark"] {
+        /* Reset dark theme variables to light for printing */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9fa;
+        --text-primary: #212529;
+        --table-bg: #ffffff;
+        --border-primary: #dee2e6;
+    }
+
+    [data-theme="dark"] body,
+    [data-theme="dark"] .card,
+    [data-theme="dark"] .table,
+    [data-theme="dark"] .modal-content {
+        background-color: white !important;
+        color: black !important;
+    }
+}
+
+/* ========================================
+   ACCORDION THEME SUPPORT
+   ======================================== */
+
+/* Accordion no tema dark */
+[data-theme="dark"] .accordion-item {
+    background-color: var(--bg-primary);
+    border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .accordion-button {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-primary);
+}
+
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .accordion-button:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.25rem rgba(86, 156, 214, 0.25);
+}
+
+[data-theme="dark"] .accordion-button::after {
+    filter: brightness(0) invert(0.8);
+}
+
+[data-theme="dark"] .accordion-body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}

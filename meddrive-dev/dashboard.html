@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meddrive</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="webjars/font-awesome/6.4.0/css/all.min.css"> <!-- DataTables CSS -->
+    <link rel="stylesheet" href="webjars/datatables/1.13.4/css/dataTables.bootstrap5.min.css">
+
+    <!-- Chart.js CDN (versão fixada para evitar breaking changes) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles-53b7c733516de1d1ff148cf9efa3f89b.css">
+
+    <!-- Light Theme CSS -->
+    <link rel="stylesheet" href="css/light-theme-233e0eb8e345e2ea1649b6376bcf9c1f.css">
+
+    <!-- Dark Theme CSS -->
+    <link rel="stylesheet" href="css/dark-theme-e8bd8ddc0e7e37f8d1b0c0470f387ba4.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="images/web-app-manifest-512x512.png" alt="Meddrive Logo" class="img-fluid">
+            </div>
+            <button id="sidebarToggle" class="sidebar-toggle-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="#home" class="nav-link active nav-content-link" id="homeLink" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item" style="position: relative;">
+                <a href="#dicom-server" class="nav-link nav-content-link" id="dicomServerDashboardLink"
+                    data-page="dicom-server">
+                    <i class="fas fa-x-ray"></i>
+                    <span>DICOM Server</span>
+                </a>
+                <span id="dicomServerFailureBadge" class="sidebar-failure-badge" style="display: none;"></span>
+            </li>
+            <li class="nav-item">
+                <a href="#dicom-worklist" class="nav-link nav-content-link" id="dicomWorklistDashboardLink"
+                    data-page="dicom-worklist">
+                    <i class="fas fa-list-alt"></i>
+                    <span>DICOM Worklist</span>
+                </a>
+            </li>
+
+            <li class="nav-item" style="position: relative;">
+                <a href="#imager" class="nav-link nav-content-link" id="imagerDashboardLink" data-page="imager">
+                    <i class="fas fa-camera"></i>
+                    <span>Imager</span>
+                </a>
+                <span id="imagerFailureBadge" class="sidebar-failure-badge" style="display: none;"></span>
+            </li>
+            <li class="nav-item" style="position: relative;">
+                <a href="#gateway" class="nav-link nav-content-link" id="gatewayDashboardLink" data-page="gateway">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Gateway</span>
+                </a>
+                <span id="gatewayFailureBadge" class="sidebar-failure-badge" style="display: none;"></span>
+            </li>
+            <li class="nav-item">
+                <a href="#report" class="nav-link nav-content-link" data-page="report">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Laudos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#admin-configurations" class="nav-link nav-content-link" id="adminConfigurationsLink"
+                    data-page="admin-configurations">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Admin Configurações</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Session info at bottom of sidebar -->
+        <div class="sidebar-footer"
+            style="position: absolute; bottom: 0; width: 100%; padding: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="sidebar-footer-content d-flex align-items-center justify-content-between"
+                style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">
+                <div class="sidebar-footer-user" style="max-width: 160px; min-width: 0; line-height: 1.2;">
+                    <div class="sidebar-text text-truncate">Lucas Favaro</div>
+                    <div class="text-truncate" style="font-size: 0.7rem; opacity: 0.75;">Administrador</div>
+                </div>
+                <button id="logoutSidebarBtn" class="btn-icon-only"
+                    style="color: rgba(255,255,255,0.7) !important; font-size: 0.85rem;" title="Sair">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+            <div class="sidebar-version-line" title="v1.1.0 · build 434 (30e0236) · 07/06/2026 19:49"
+                style="color: rgba(255,255,255,0.55); font-size: 0.7rem; padding-top: 0.5rem; margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <span class="sidebar-text text-truncate d-block">v1.1.0 · build 434</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content - Initially, this will be empty or hold a very basic placeholder. -->
+    <!-- Content will be loaded dynamically by dashboard.js -->
+    <div class="main-content" id="mainDashboardContent">
+        <!-- Content will be loaded here by JavaScript -->
+        <p>Loading dashboard...</p>
+    </div>
+
+    <!-- Theme Manager - Load first to apply theme immediately -->
+    <script src="js/theme-manager-a7e10798c3d2c652368ad84430194406.js"></script>
+
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="webjars/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="webjars/datatables/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="webjars/datatables/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables Configuration & Renderers -->
+    <script src="js/datatables-config-a5fbb741fd9afacd78059e9f4d256fd9.js"></script>
+    <script src="js/datatables-renderers-5168343ba3325a87dea89c38e88bf57a.js"></script>
+
+    <!-- UI Utilities (shared alert functions, etc) -->
+    <script src="js/ui-utils-e62b7d6d87f895df674bbba74a274c2e.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/dev-override.js"></script>
+    <script src="js/dashboard-8721f99f438e450d939706910cd25e91.js"></script>
+    <script src="js/gateway-dashboard-e99819f4d6523e78878ef795f9c381f7.js"></script>
+
+    <!-- ========================================
+         Imager Module JS - ORDEM CRÍTICA
+         1. Utils → 2. Steps → 3. Core
+         ======================================== -->
+    <!-- Load Sortable.js for drag-and-drop file reordering in Imager approval review -->
+    <script src="vendor/sortable/Sortable.min.js"></script>
+
+    <!-- 1. Utilitários PRIMEIRO -->
+    <script src="js/imager-shared-utils-c5996def040b20d3e6090389138f3ccf.js"></script>
+
+    <!-- 2. Steps (ordem: step1 → step4) -->
+    <script src="js/imager-order-755a72a3b218afad68425340235e3a8a.js"></script><!-- Step 1: Orders/Patients -->
+    <script src="js/imager-files-fd9f5d95ed55d23c9f32886150f71030.js"></script><!-- Step 2: Files -->
+    <script src="js/imager-approval-1298b2ad4f69a254b0f3b3b80d9d242f.js"></script><!-- Step 3: Approval (Tree View) -->
+    <script src="js/imager-approval-review-9e6feb79888dca714a683cdfee5ae09b.js"></script>
+    <!-- Step 3: PDF Review Modal -->
+    <script src="js/imager-completed-92d3e5e396c0cf6ed1d73ffbc264f266.js"></script><!-- Step 4: Completed -->
+
+    <!-- 3. Core POR ÚLTIMO -->
+    <script src="js/imager-952eb5d07834b682d5351fbef05659ba.js"></script><!-- Core: Orchestrator and DataTable -->
+
+    <!-- 4. Configurações específicas -->
+    <script src="js/imager-exam-config-3cf19a3f6d45d50084dbe47ea2b202a1.js"></script>
+    <script src="js/imager-repository-config-447f488af86bc7414de305c269fcf095.js"></script>
+    <script src="js/imager-exam-groups-d697aeedc9e3de11a32b347d975836ef.js"></script>
+    <script src="js/imager-his-destinations-2912ab88debe4a2b64f2e82f29cbbcf2.js"></script>
+    <script src="js/imager-manual-order-66b1c9ad04b97f4e0be4a632fbd662bd.js"></script>
+    <script src="js/file-repository-profiles-be268394da5a1a426ea805b9ce50f027.js"></script>
+    <!-- PDF.js for Mask Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Configure PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <script src="js/mask-editor-eacaaf36f885f14c24af2cd8d9a61ebc.js"></script>
+    <script src="js/ocr-masks-148b75b7dbcfecbdc137d8bd3b11c381.js"></script>
+    <!-- DICOM Modules -->
+    <script src="js/dicom-server-47422b471b91b72de95d2a75d19524fb.js"></script>
+    <script src="js/dicom-worklist-72e295353713ba63f79928a2673982eb.js"></script>
+    <script src="js/dicom-print-8ea25819291d14bcb36c9badd0cad1f8.js"></script>
+    <script src="js/dicom-print-config-7baa884a40c4d38a97a930c0f1754870.js"></script>
+
+    <!-- Gateway Module -->
+    <script src="js/gateway-patient-logins-0b18ef59b5e4bc328fe27e220bd3ee34.js"></script>
+    <script src="js/gateway-provider-logins-5798d9c96171e55cd4e53d249ae310e2.js"></script>
+    <script src="js/gateway-config-16f8e47a3c144efd1a586a9cca1ad5dc.js"></script>
+
+    <!-- Admin Profiles & Users Management -->
+    <script src="js/admin-profiles-21957a1858b1eacc6878f31652514f0e.js"></script>
+    <script src="js/admin-users-6b22ce22dbb6d1957a90b8ac7c855f18.js"></script>
+    <script src="js/admin-logging-f6eca4b0897777b70bfa8b88c0ec636e.js"></script>
+    <script src="js/report-config-427cf05febb0e4cf0b4f5256cf5386a9.js"></script>
+
+    <!-- Report Module -->
+    <link rel="stylesheet" href="vendor/quill/quill.snow.min.css">
+    <link rel="stylesheet" href="css/report-605206f79a6c7e02d3b21b55ef4f2ecd.css">
+    <script src="vendor/quill/quill.min.js"></script>
+    <script src="js/report-dashboard-3ed16c023fa5b2b2445229c8943964c9.js"></script>
+    <script src="js/report-local-editor-5ed925ebd0e88073b94f40f0bd7fdef2.js"></script>
+    <script src="js/report-templates-e71a763886dfdcbb79c7432dfab0fc2c.js"></script>
+    <script src="js/report-review-list-10d5de998cef256d85f124840f64fdaf.js"></script>
+    <script src="js/report-review-editor-2dd68ae600d07500a7d2971b77a6930e.js"></script>
+
+    <!-- Report Editor Modal (fullscreen) — populado dinamicamente pelo report-dashboard.js -->
+    <div class="modal fade" id="reportEditorModal" tabindex="-1" aria-labelledby="reportEditorModalTitle"
+        aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header py-2 bg-primary text-white">
+                    <h5 class="modal-title" id="reportEditorModalTitle">
+                        <i class="fas fa-pen-fancy me-2"></i>Editor de Laudo
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body p-0" id="reportEditorModalBody">
+                    <!-- Fragment report-local-editor.html é injetado aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

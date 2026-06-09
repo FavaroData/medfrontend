@@ -1,0 +1,125 @@
+/* Report module — estilos específicos */
+
+/* Editor split-screen.
+   Dentro do modal-fullscreen: ocupa altura do viewport menos o header do modal
+   (~56px) + header do exame (~50px) + footer com botões (~60px) = ~170px.
+   Fora do modal (fallback se for usado inline): mantém a altura antiga. */
+.report-editor-layout {
+    display: flex;
+    height: calc(100vh - 200px);
+    min-height: 500px;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.modal-fullscreen .report-editor-layout {
+    /* Modal-fullscreen ocupa 100vh; descontamos modal-header + header do exame + footer */
+    height: calc(100vh - 220px);
+}
+
+.report-editor-pdf-pane {
+    flex: 1 1 50%;
+    background: var(--bg-card, #f8f9fa);
+    border: 1px solid var(--border-color, #dee2e6);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.report-editor-pdf-toolbar {
+    padding: 0.5rem;
+    background: var(--bg-secondary, #e9ecef);
+    border-bottom: 1px solid var(--border-color, #dee2e6);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.report-editor-pdf-canvas-wrap {
+    flex: 1;
+    overflow: auto;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Container do scroll contínuo de todas as páginas do PDF */
+#reportPdfCanvasContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Cada página do PDF renderizada como canvas */
+.report-pdf-page {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    max-width: 100%;
+    height: auto;
+}
+
+.report-editor-text-pane {
+    flex: 1 1 50%;
+    background: var(--bg-card, #fff);
+    border: 1px solid var(--border-color, #dee2e6);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#reportQuillEditor {
+    flex: 1;
+    overflow: auto;
+}
+
+.ql-toolbar.ql-snow {
+    border: none;
+    border-bottom: 1px solid var(--border-color, #dee2e6);
+    background: var(--bg-secondary, #e9ecef);
+}
+
+.ql-container.ql-snow {
+    border: none;
+    font-size: 1rem;
+    flex: 1;
+}
+
+/* Document/text area do editor (laudo + templates): sempre branco, mesmo
+   no tema dark. Mimetiza papel — independente da preferência de tema do app,
+   o operador digita sobre fundo branco com texto escuro. */
+#reportQuillEditor .ql-container,
+#reportTemplateContentEditor .ql-container,
+#reportQuillEditor .ql-editor,
+#reportTemplateContentEditor .ql-editor {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+#reportQuillEditor .ql-editor.ql-blank::before,
+#reportTemplateContentEditor .ql-editor.ql-blank::before {
+    color: #6c757d;
+}
+
+.report-autosave-status {
+    font-size: 0.85rem;
+    color: var(--text-muted, #6c757d);
+    margin-left: auto;
+}
+.report-autosave-status.saving { color: var(--bs-info, #0dcaf0); }
+.report-autosave-status.saved  { color: var(--bs-success, #198754); }
+.report-autosave-status.error  { color: var(--bs-danger, #dc3545); }
+
+.badge-order-status-awaiting_report { background-color: #6c757d; color: #fff; }
+.badge-order-status-in_review        { background-color: #0d6efd; color: #fff; }
+.badge-order-status-approved         { background-color: #198754; color: #fff; }
+.badge-order-status-delivered        { background-color: #20c997; color: #fff; }
+.badge-order-status-retry_exhausted  { background-color: #dc3545; color: #fff; }
+.badge-order-status-cancelled        { background-color: #adb5bd; color: #fff; }
+
+@media (max-width: 991.98px) {
+    .report-editor-layout { flex-direction: column; height: auto; }
+    .report-editor-pdf-pane, .report-editor-text-pane { flex: 1 1 auto; min-height: 400px; }
+}

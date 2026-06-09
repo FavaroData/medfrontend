@@ -1,0 +1,861 @@
+/* Note: CSS Variables are now centralized in light-theme.css and dark-theme.css */
+/* This file uses those variables for consistency across light/dark themes */
+
+/* ========================================
+   STATUS BADGES (Unified - cores suaves para ambos os temas)
+   Definidas aqui para evitar duplicação entre light-theme.css e dark-theme.css
+   ======================================== */
+:root {
+    /* Pending (Amarelo/Laranja translúcido) */
+    --status-pending-bg: rgba(245, 158, 11, 0.15);      /* Laranja translúcido */
+    --status-pending-text: rgba(245, 158, 11, 0.8);     /* Laranja 80% opacidade */
+    --status-pending-border: transparent;                /* Sem borda */
+
+    /* Processing (Azul translúcido) */
+    --status-processing-bg: rgba(59, 130, 246, 0.15);   /* Azul translúcido */
+    --status-processing-text: rgba(59, 130, 246, 0.8);  /* Azul 80% opacidade */
+    --status-processing-border: transparent;             /* Sem borda */
+
+    /* Completed (Verde translúcido) */
+    --status-completed-bg: rgba(16, 185, 129, 0.15);    /* Verde translúcido */
+    --status-completed-text: rgba(16, 185, 129, 0.8);   /* Verde 80% opacidade */
+    --status-completed-border: transparent;              /* Sem borda */
+
+    /* Failed (Vermelho translúcido) */
+    --status-failed-bg: rgba(239, 68, 68, 0.15);        /* Vermelho translúcido */
+    --status-failed-text: rgba(239, 68, 68, 0.8);       /* Vermelho 80% opacidade */
+    --status-failed-border: transparent;                 /* Sem borda */
+
+    /* Incomplete (Cinza translúcido) */
+    --status-incomplete-bg: rgba(107, 114, 128, 0.15);  /* Cinza translúcido */
+    --status-incomplete-text: rgba(107, 114, 128, 0.8); /* Cinza 80% opacidade */
+    --status-incomplete-border: transparent;             /* Sem borda */
+
+    /* Skipped (Cinza translúcido) */
+    --status-skipped-bg: rgba(156, 163, 175, 0.15);     /* Cinza translúcido */
+    --status-skipped-text: rgba(156, 163, 175, 0.8);    /* Cinza 80% opacidade */
+    --status-skipped-border: transparent;                /* Sem borda */
+}
+
+/* ========================================
+   BOOTSTRAP BADGE OVERRIDES (Padrão Translúcido)
+   Sobrescreve badges do Bootstrap para usar nosso padrão visual
+   ======================================== */
+
+/* Base badge styling */
+.badge {
+    border-radius: 0.2rem !important;
+    border: none !important;
+    font-weight: 600 !important;
+    padding: 0.35em 0.65em !important;
+}
+
+/* Warning (Amarelo/Laranja) - Pendente, Aviso, Inativo */
+.badge.bg-warning {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    color: rgba(245, 158, 11, 0.8) !important;
+}
+
+/* Info (Azul) - Aguardando, Pronto, Informações */
+.badge.bg-info {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: rgba(59, 130, 246, 0.8) !important;
+}
+
+/* Primary (Azul escuro) - Processando */
+.badge.bg-primary {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: rgba(59, 130, 246, 0.8) !important;
+}
+
+/* Success (Verde) - Processado, Ativo, Sucesso */
+.badge.bg-success {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: rgba(16, 185, 129, 0.8) !important;
+}
+
+/* Danger (Vermelho) - Erro, Falha */
+.badge.bg-danger {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    color: rgba(239, 68, 68, 0.8) !important;
+}
+
+/* Secondary (Cinza) - Padrão, IDs, Desabilitado */
+.badge.bg-secondary {
+    background-color: rgba(107, 114, 128, 0.15) !important;
+    color: rgba(107, 114, 128, 0.8) !important;
+}
+
+/* Light (Cinza claro) - Contadores */
+.badge.bg-light {
+    background-color: rgba(156, 163, 175, 0.15) !important;
+    color: rgba(107, 114, 128, 0.8) !important;
+}
+
+/* Dark (Cinza escuro) */
+.badge.bg-dark {
+    background-color: rgba(55, 65, 81, 0.15) !important;
+    color: rgba(55, 65, 81, 0.8) !important;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-size: 75%; /* Reduzindo o tamanho da fonte para 75% do tamanho original */
+}
+
+/* ========================================
+   UNIFIED BUTTON STYLING
+   Compact buttons (btn-sm sizing) as default
+   btn-primary matches sidebar background color
+   ======================================== */
+.btn:not(.btn-lg) {
+    --bs-btn-padding-y: 0.25rem;
+    --bs-btn-padding-x: 0.5rem;
+    --bs-btn-font-size: 0.875rem;
+    --bs-btn-border-radius: 0.25rem;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--primary-color);
+    --bs-btn-border-color: var(--primary-color);
+    --bs-btn-color: #fff;
+    --bs-btn-hover-bg: var(--color-primary);
+    --bs-btn-hover-border-color: var(--color-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--color-primary);
+    --bs-btn-active-border-color: var(--primary-color);
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-bg: var(--primary-color);
+    --bs-btn-disabled-border-color: var(--primary-color);
+    --bs-btn-disabled-color: #fff;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding-top: 10px;
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+.sidebar.folded {
+    width: 70px;
+}
+
+.sidebar.folded .sidebar-header {
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+}
+
+/* Spacer mirroring the toggle button width so the logo stays visually centered when expanded */
+.sidebar-header::before {
+    content: '';
+    width: 44px;
+    flex-shrink: 0;
+}
+
+.sidebar.folded .sidebar-header::before {
+    display: none;
+}
+
+.sidebar .logo {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.sidebar .logo img {
+    max-width: 130px;
+    max-height: 45px;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.sidebar.folded .logo {
+    width: 0;
+    flex: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.sidebar-toggle-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-size: 24px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-item {
+    margin-bottom: 8px;
+}
+
+.sidebar .nav-link {
+    color: var(--text-light);
+    padding: 18px 18px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 8px;
+    margin: 0 8px;
+}
+
+.sidebar .nav-link i {
+    margin-right: 12px;
+    width: 28px;
+    font-size: 22px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar.folded .nav-link {
+    justify-content: center;
+    padding: 18px 0;
+    margin: 0 6px;
+}
+
+.sidebar.folded .nav-item {
+    margin-bottom: 8px;
+}
+
+.sidebar.folded .nav-link span {
+    display: none;
+}
+
+.sidebar.folded .nav-link i {
+    margin-right: 0;
+    font-size: 22px;
+}
+
+/* Sidebar footer: user name + profile name + logout button.
+   Expanded: user/profile (two stacked lines) and the logout icon on the same row (no user icon).
+   Folded: user name on top, profile name below it, then the logout icon — all stacked, centered, truncated to fit. */
+.sidebar.folded .sidebar-footer-content {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.sidebar.folded .sidebar-footer-content > .sidebar-footer-user {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+}
+
+/* Sidebar failure badge */
+.sidebar-failure-badge {
+    position: absolute;
+    background-color: #ef4444;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 9px;
+    padding: 0 5px;
+    top: 6px;
+    right: 8px;
+    box-shadow: 0 0 0 2px var(--bg-sidebar, #1a1d23);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+.sidebar.folded .sidebar-failure-badge {
+    top: 2px;
+    right: 0;
+    font-size: 9px;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 4px;
+}
+
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.08);
+    opacity: 1;
+}
+
+/* Highlighted icons for active/hover state (both themes) */
+.sidebar .nav-link:hover i,
+.sidebar .nav-link.active i {
+    color: var(--color-primary-light);
+    font-size: 20px;
+    transform: scale(1.15);
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover span,
+.sidebar .nav-link.active span {
+    color: var(--color-primary-light);
+}
+
+/* Smooth transition for icons */
+.sidebar .nav-link i {
+    transition: all 0.2s ease;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 15px; /* Reduzido de 20px para 15px */
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+body.sidebar-folded .main-content {
+    margin-left: 70px;
+}
+
+.top-bar {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 10px 15px; /* Reduzido de 15px 20px para 10px 15px */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px; /* Reduzido de 20px para 15px */
+}
+
+/* Status indicator styling moved to dashboard-common.css */
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+.worklist-table {
+    background-color: var(--bg-primary);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    margin-bottom: 20px;
+}
+
+.table th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
+    border-bottom: 2px solid var(--border-primary);
+}
+
+.status-pill {
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 9px; /* Reduzido de 12px para 9px (75%) */
+    font-weight: bold;
+    text-align: center;
+}
+
+.status-pending {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
+}
+
+.status-completed {
+    background-color: var(--status-completed-bg);
+    color: var(--status-completed-text);
+}
+
+.status-key {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow-color-hover);
+    border: 1px solid var(--border-primary);
+    z-index: 1000;
+    max-width: 300px;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    filter: brightness(0.95);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.action-icon {
+    cursor: pointer;
+    color: var(--secondary-color);
+    font-size: 18px;
+    margin: 0 5px;
+}
+
+.selected-checkbox {
+    width: 18px;
+    height: 18px;
+}
+
+.pagination {
+    justify-content: flex-end;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Filter form styles */
+#filterForm {
+    padding: 1rem;
+}
+
+/* Form styling moved to dashboard-common.css */
+
+#filterForm .btn {
+    margin-right: 0.5rem;
+}
+
+#filterForm .col-12 {
+    margin-top: 1rem;
+}
+
+/* Status badge colors */
+.badge.bg-warning {
+    color: var(--text-dark);
+}
+
+/* Refresh button styles */
+#refreshBtn {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+    color: var(--text-light);
+}
+
+#refreshBtn:hover {
+    opacity: 0.9;
+    filter: brightness(0.9);
+}
+
+/* Improved table styles */
+
+/* Global table row height and spacing */
+.table tbody tr {
+    height: 60px;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 12px 8px !important;
+    vertical-align: middle;
+}
+
+/* Increase secondary text size globally for better readability */
+.table .text-muted,
+.table small.text-muted {
+    font-size: 0.85rem !important;
+    opacity: 0.85;
+    display: block;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+}
+
+/* DataTables customization moved to dashboard-common.css */
+
+/* Imager Dashboard Table Styling */
+#imagerWorklistTable {
+    table-layout: fixed;
+    width: 100% !important;
+    font-size: 0.85rem;
+}
+
+#imagerWorklistTable th,
+#imagerWorklistTable td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.5rem 0.3rem;
+    vertical-align: middle;
+    line-height: 1.4;
+    height: auto;
+}
+
+#imagerWorklistTable th {
+    text-align: center;
+    padding: 8px 4px;
+}
+
+/* Imager DataTable headers moved to dashboard-common.css */
+
+#imagerWorklistTable td {
+    padding: 4px 6px;
+}
+
+/* Standardized table layout for consistency across modules */
+#imagerWorklistTable.dataTable.compact tbody td,
+#imagerWorklistTable tbody td {
+    padding: 10px 8px !important;
+    line-height: 1.4 !important;
+    vertical-align: middle !important;
+}
+
+/* Standard header padding */
+#imagerWorklistTable thead th {
+    padding: 10px 8px !important;
+}
+
+/* DataTables wrapper spacing moved to dashboard-common.css */
+
+/* Compact table layout */
+#imagerWorklistTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+/* Ensure no extra padding in table cells */
+#imagerWorklistTable td,
+#imagerWorklistTable th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Specific column width controls for imager table - Step 1 with Atend. column */
+/* Column 1: Data */
+#imagerWorklistTable th:nth-child(1),
+#imagerWorklistTable td:nth-child(1) {
+    width: 9%;
+    min-width: 80px;
+    max-width: 110px;
+}
+
+/* Column 2: Atend. */
+#imagerWorklistTable th:nth-child(2),
+#imagerWorklistTable td:nth-child(2) {
+    width: 6%;
+    min-width: 50px;
+    max-width: 70px;
+}
+
+/* Column 3: Prescr. */
+#imagerWorklistTable th:nth-child(3),
+#imagerWorklistTable td:nth-child(3) {
+    width: 6%;
+    min-width: 60px;
+    max-width: 80px;
+}
+
+/* Column 4: Paciente */
+#imagerWorklistTable th:nth-child(4),
+#imagerWorklistTable td:nth-child(4) {
+    width: 24%;
+    min-width: 200px;
+    max-width: none; /* Remove max-width restriction for patient names */
+}
+
+/* Column 5: Nasc. */
+#imagerWorklistTable th:nth-child(5),
+#imagerWorklistTable td:nth-child(5) {
+    width: 8%;
+    min-width: 80px;
+    max-width: 100px;
+}
+
+/* Column 6: CPF */
+#imagerWorklistTable th:nth-child(6),
+#imagerWorklistTable td:nth-child(6) {
+    width: 9%;
+    min-width: 100px;
+    max-width: 120px;
+}
+
+/* Column 7: Procedimento */
+#imagerWorklistTable th:nth-child(7),
+#imagerWorklistTable td:nth-child(7) {
+    width: 17%;
+    min-width: 150px;
+    max-width: 220px;
+}
+
+/* Column 8: Médico */
+#imagerWorklistTable th:nth-child(8),
+#imagerWorklistTable td:nth-child(8) {
+    width: 14%;
+    min-width: 120px;
+    max-width: 180px;
+}
+
+/* Column 9: Processo */
+#imagerWorklistTable th:nth-child(9),
+#imagerWorklistTable td:nth-child(9) {
+    width: 8%;
+    min-width: 80px;
+    max-width: 120px;
+}
+
+/* Text truncation for patient names and long content */
+#imagerWorklistTable .text-truncate {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Ensure patient name column specifically handles long names (now 4th column) */
+#imagerWorklistTable td:nth-child(4) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Prescription number formatting (now 3rd column) */
+#imagerWorklistTable td:nth-child(3) {
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+}
+
+/* Status badge styling */
+#imagerWorklistTable .badge {
+    font-size: 0.75rem;
+    padding: 0.25em 0.5em;
+}
+
+/* DataTable scroll adjustments moved to dashboard-common.css */
+
+/* Responsive table container */
+.table-responsive {
+    min-height: 400px;
+}
+
+/* Tree-view child table (compact) */
+.table-tree-child th,
+.table-tree-child td {
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+}
+
+.table-tree-child tr {
+    height: auto !important;
+}
+
+/* Loading state styling — fixed to viewport so it stays centered regardless of
+   scroll position or where the table sits in the page layout.
+   !important is required because DataTables sets inline position/top/left/margin
+   styles on this element that would otherwise win the cascade. */
+#imagerWorklistTable_processing {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    background: var(--loading-overlay-bg);
+    border-radius: 4px;
+    padding: 1rem;
+    z-index: 1050;
+}
+
+/* Tooltip styling for truncated text */
+[title] {
+    cursor: help;
+}
+
+/* Enhanced filter section styling */
+.filter-section {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-primary);
+}
+
+.filter-item {
+    margin-bottom: 0.5rem;
+}
+
+.filter-item label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+/* Button group styling moved to dashboard-common.css */
+
+/* Ensure action buttons in DataTable don't affect row height */
+#imagerWorklistTable tbody td .btn-sm {
+    padding: 2px 6px !important;
+    font-size: 0.75rem !important;
+    line-height: 1.2 !important;
+    height: 24px !important;
+    vertical-align: middle !important;
+}
+
+#imagerWorklistTable tbody td .btn-sm i {
+    font-size: 12px !important;
+}
+
+/* Fix for consistent table column styling across all steps */
+#imagerWorklistTable td,
+#imagerWorklistTable th {
+    color: inherit !important;
+    font-weight: inherit !important;
+    font-family: inherit !important;
+    font-style: normal !important;
+}
+
+/* DataTable cells styling moved to dashboard-common.css */
+
+/* Override any Bootstrap or DataTable default styling for the 3rd column */
+#imagerWorklistTable tbody td:nth-child(3) {
+    color: var(--text-primary) !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+}
+
+/* Status badge styles moved to dashboard-common.css */
+
+/* Ensure Bootstrap badge overrides work properly */
+.badge {
+    font-weight: 600 !important;
+    font-size: 0.75em !important;
+    padding: 0.35em 0.65em !important;
+}
+
+/* Ultra-specific overrides for DataTable badges with maximum specificity */
+/* These use CSS variables to support both light and dark themes */
+table#imagerWorklistTable tbody tr td .badge.bg-warning,
+table#imagerWorklistTable tbody tr td span.badge.bg-warning,
+#imagerWorklistTable .badge.bg-warning {
+    background-color: var(--status-pending-bg) !important;
+    background: var(--status-pending-bg) !important;
+    color: var(--status-pending-text) !important;
+    border: 2px solid var(--status-pending-border) !important;
+}
+
+table#imagerWorklistTable tbody tr td .badge.bg-success,
+table#imagerWorklistTable tbody tr td span.badge.bg-success,
+#imagerWorklistTable .badge.bg-success {
+    background-color: var(--status-completed-bg) !important;
+    background: var(--status-completed-bg) !important;
+    color: var(--status-completed-text) !important;
+    border: 2px solid var(--status-completed-border) !important;
+}
+
+table#imagerWorklistTable tbody tr td .badge.bg-primary,
+table#imagerWorklistTable tbody tr td span.badge.bg-primary,
+#imagerWorklistTable .badge.bg-primary {
+    background-color: var(--status-processing-bg) !important;
+    background: var(--status-processing-bg) !important;
+    color: var(--status-processing-text) !important;
+    border: 2px solid var(--status-processing-border) !important;
+}
+
+table#imagerWorklistTable tbody tr td .badge.bg-secondary,
+table#imagerWorklistTable tbody tr td span.badge.bg-secondary,
+#imagerWorklistTable .badge.bg-secondary {
+    background-color: var(--status-incomplete-bg) !important;
+    background: var(--status-incomplete-bg) !important;
+    color: var(--status-incomplete-text) !important;
+    border: 2px solid var(--status-incomplete-border) !important;
+}
+
+table#imagerWorklistTable tbody tr td .badge.bg-danger,
+table#imagerWorklistTable tbody tr td span.badge.bg-danger,
+#imagerWorklistTable .badge.bg-danger {
+    background-color: var(--status-failed-bg) !important;
+    background: var(--status-failed-bg) !important;
+    color: var(--status-failed-text) !important;
+    border: 2px solid var(--status-failed-border) !important;
+}
+
+table#imagerWorklistTable tbody tr td .badge.bg-info,
+table#imagerWorklistTable tbody tr td span.badge.bg-info,
+#imagerWorklistTable .badge.bg-info {
+    background-color: var(--info-bg) !important;
+    background: var(--info-bg) !important;
+    color: var(--info-text) !important;
+    border: 2px solid var(--info-border) !important;
+}
+
+/* Row background highlighting based on parent status */
+/* REMOVED: opacity on entire row made text invisible in dark mode */
+/* Now using standard table striping - status is visible via badge column */
+#imagerWorklistTable tbody tr[data-parent-status="COMPLETED"] {
+    /* Status visible via badge - no special background needed */
+}
+
+#imagerWorklistTable tbody tr[data-parent-status="PENDING"] {
+    /* Status visible via badge - no special background needed */
+}
+
+#imagerWorklistTable tbody tr[data-parent-status="PROCESSING"] {
+    /* Status visible via badge - no special background needed */
+}
+
+#imagerWorklistTable tbody tr[data-parent-status="FAILED"] {
+    /* Status visible via badge - no special background needed */
+}

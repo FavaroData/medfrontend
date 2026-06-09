@@ -1,0 +1,470 @@
+/* ========================================
+   Imager Module Styles
+   Includes styles for Imager Dashboard and Configuration pages
+   Uses global CSS variables from light-theme.css and dark-theme.css
+   ======================================== */
+
+/* ========================================
+   Imager Dashboard Styles
+   ======================================== */
+
+.approve-btn {
+    font-size: 0.8em;
+    padding: 4px 12px;
+    white-space: nowrap;
+    min-width: 80px;
+}
+
+.file-count {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/* Improve tree child row layout */
+.tree-child .d-flex {
+    min-height: 32px;
+}
+
+/* Prevent action column from being too narrow */
+#imagerWorklistTable th:last-child,
+#imagerWorklistTable td:last-child {
+    min-width: 140px;
+    white-space: nowrap;
+}
+
+/* PDF Review Modal - Uses CSS variables for theme support */
+#pdfReviewModal .modal-content {
+    background-color: var(--modal-bg);
+}
+
+#pdfReviewModal .modal-header {
+    background-color: var(--modal-header-bg);
+    border-bottom: 1px solid var(--modal-border);
+}
+
+/* File list items */
+#reviewFileList .list-group-item {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+#reviewFileList .list-group-item:hover {
+    background-color: var(--table-hover-bg);
+    color: var(--text-bright);
+}
+
+#reviewFileList .list-group-item.active {
+    background-color: var(--primary-color);
+    border-color: var(--border-focus);
+    color: var(--text-light);
+}
+
+/* Toolbar styling */
+#pdfReviewModal .px-3.py-2 {
+    background-color: var(--modal-header-bg) !important;
+    border-bottom: 1px solid var(--modal-border) !important;
+}
+
+/* Navigation buttons - borderless for cleaner look */
+/* Bootstrap 5.3 uses CSS Custom Properties, so we override those variables */
+#pdfReviewModal .btn-outline-light,
+#pdfReviewModal .btn-group .btn-outline-light,
+#pdfReviewModal button.btn-outline-light {
+    --bs-btn-color: var(--text-primary);
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: var(--text-bright);
+    --bs-btn-hover-bg: var(--primary-color);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-color: var(--text-bright);
+    --bs-btn-active-bg: var(--primary-color);
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-disabled-color: var(--text-muted);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: transparent;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+#pdfReviewModal .btn-outline-light:focus,
+#pdfReviewModal .btn-group .btn-outline-light:focus,
+#pdfReviewModal button.btn-outline-light:focus {
+    --bs-btn-focus-shadow-rgb: 0, 0, 0;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Badge styling - better visibility */
+#pdfReviewModal .badge.bg-info {
+    background-color: var(--primary-color) !important;
+    color: var(--text-light) !important;
+    padding: 0.5em 0.75em;
+    border: none;
+    font-weight: 500;
+}
+
+/* Text colors - ensure proper theme colors */
+#pdfReviewModal .small.fw-bold {
+    color: var(--text-primary) !important;
+}
+
+/* PDF Viewer Container - Dark background for better PDF contrast in both themes */
+#pdfViewerContainer {
+    /* Force dark background for PDF viewing area in both light and dark themes */
+    background-color: #1a1a1a !important;
+    /* Ensure text is visible on dark background */
+    color: #cccccc !important;
+}
+
+#pdfViewerContainer .text-muted {
+    /* Secondary text on dark background */
+    color: #999999 !important;
+}
+
+/* Canvas styling */
+#pdfCanvas {
+    box-shadow: 0 4px 20px var(--shadow-color-hover);
+    border-radius: 2px;
+}
+
+/* Sidebar header text */
+#pdfReviewModal h6 {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+}
+
+/* File list header - larger for better visibility */
+.file-list-header {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+}
+
+/* Fixed width for action buttons to prevent layout shift */
+#btnMarkForApproval,
+#btnUnmarkForApproval {
+    min-width: 110px;
+    width: 110px;
+}
+
+#btnFinishReview {
+    min-width: 110px;
+    width: 110px;
+}
+
+/* Standardized text sizes for toolbar - all consistent */
+#pdfReviewModal .small.fw-bold {
+    font-size: 0.875rem !important;  /* Reduced from 1rem - file counter (1/5, 2/5) */
+    font-weight: 500 !important;
+}
+
+#markedForApprovalCount {
+    font-size: 0.875rem !important;  /* Standardized to match */
+    font-weight: 500 !important;
+}
+
+/* Zoom percentage display - standardized size */
+#zoomPercentage {
+    font-size: 0.875rem !important;  /* Increased and standardized */
+    font-weight: 500 !important;
+}
+
+/* Confirmation modal */
+#approvalConfirmationModal .modal-content {
+    background-color: var(--modal-bg);
+    color: var(--text-primary);
+}
+
+#approvalConfirmationModal .modal-header {
+    background-color: var(--warning-bg);
+    border-bottom: 1px solid var(--warning-border);
+}
+
+#approvalConfirmationModal .modal-header .modal-title {
+    color: var(--warning-text);
+}
+
+#approvalConfirmationModal .modal-body {
+    background-color: var(--modal-bg);
+    color: var(--text-primary);
+}
+
+#approvalConfirmationModal .alert-warning {
+    background-color: var(--alert-warning-bg);
+    border-color: var(--alert-warning-border);
+    color: var(--alert-warning-text);
+}
+
+#approvalConfirmationModal .modal-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--modal-border);
+}
+
+/* ========================================
+   Imager Configuration Page Styles
+   ======================================== */
+
+/* Navbar and navigation styles - uses global theme variables */
+.navbar {
+    background: var(--primary-color) !important;
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.navbar-brand {
+    color: var(--text-light) !important;
+    font-weight: normal;
+}
+
+.navbar-text {
+    color: var(--text-light) !important;
+}
+
+/* Only navbar links should be white, not tab links */
+.navbar > .nav-link,
+.navbar .navbar-nav .nav-link {
+    color: var(--text-light) !important;
+}
+
+/* Tab navigation styles removed - using global theme definitions from dark-theme.css and light-theme.css for proper contrast */
+
+/* Standardize "Adicionar" buttons width in both tabs */
+#addImagerConfigBtn,
+#addRepositoryBtn {
+    min-width: 200px;  /* Consistent width for both buttons */
+}
+
+/* Spacing between toolbar and table - removed as toolbar component already has mb-3 */
+
+/* Ensure consistent table layout across all Imager tables */
+#imagerConfigTable,
+#fileRepoTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+/* Header padding removed - using global DataTable styles from light-theme.css */
+
+/* Ensure no extra padding in table cells */
+#imagerConfigTable td,
+#imagerConfigTable th,
+#fileRepoTable td,
+#fileRepoTable th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ========================================
+   File Card Drag-and-Drop Styles
+   ======================================== */
+
+/* File card container */
+.file-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 60px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.file-card:hover {
+    background-color: var(--table-hover-bg);
+    border-color: var(--border-focus);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.file-card.active {
+    background-color: var(--primary-color);
+    border-color: var(--border-focus);
+    color: var(--text-light);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.file-card.active .file-name,
+.file-card.active .file-meta,
+.file-card.active .drag-handle {
+    color: var(--text-light) !important;
+}
+
+/* File card content layout */
+.file-card-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Drag handle */
+.drag-handle {
+    color: var(--text-muted);
+    cursor: grab;
+    cursor: -webkit-grab;
+    font-size: 1.2em;
+    flex-shrink: 0;
+    padding: 4px 8px;
+    transition: color 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.drag-handle:hover {
+    color: var(--primary-color);
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.file-card.active .drag-handle:hover {
+    color: var(--text-bright);
+}
+
+/* File info section */
+.file-info {
+    flex-grow: 1;
+    min-width: 0; /* Enable text truncation */
+}
+
+.file-name {
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.file-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+
+/* Approval indicator */
+.approval-indicator {
+    flex-shrink: 0;
+    font-size: 1.5em;
+}
+
+/* Sortable.js drag states */
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: var(--bg-tertiary);
+    border: 2px dashed var(--primary-color);
+}
+
+.sortable-drag {
+    opacity: 1;
+    background-color: var(--bg-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: rotate(2deg);
+}
+
+/* Botão de exclusão no card de arquivo do modal de aprovação */
+.file-card .file-delete-btn {
+    flex-shrink: 0;
+}
+
+.file-card .file-delete-btn.btn-icon-only i {
+    font-size: 1.1rem;
+}
+
+.file-card .file-delete-btn:hover {
+    color: var(--danger-color, #dc3545);
+}
+
+.sortable-chosen {
+    background-color: var(--table-hover-bg);
+    border-color: var(--primary-color);
+}
+
+/* Ensure file list container has proper styling */
+#reviewFileList {
+    padding: 8px;
+}
+
+/* ========================================
+   MASK EDITOR MODAL
+   ======================================== */
+
+/* PDF Canvas Wrapper */
+.pdf-canvas-wrapper {
+    min-height: 400px;
+    max-height: 600px;
+    overflow: auto;
+    text-align: center;
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary) !important;
+}
+
+.pdf-canvas-inner {
+    position: relative;
+    display: inline-block;
+}
+
+.pdf-canvas {
+    display: block;
+}
+
+.mask-canvas-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+    pointer-events: all;
+}
+
+/* Mask List Container */
+.mask-list-container {
+    max-height: 450px;
+    overflow-y: auto;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    background-color: var(--bg-secondary);
+}
+
+/* Mask Items */
+.mask-item {
+    background-color: var(--bg-primary);
+    border-color: var(--border-primary) !important;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.mask-item:hover {
+    background-color: var(--table-hover-bg);
+    box-shadow: 0 2px 4px var(--shadow-sm);
+}
+
+.mask-item:hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--primary-color);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .pdf-canvas-wrapper {
+    background-color: var(--gray-300);
+}
+
+[data-theme="dark"] .mask-list-container {
+    background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .mask-item {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .mask-item:hover {
+    background-color: var(--bg-elevated);
+}

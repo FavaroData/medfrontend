@@ -1,0 +1,137 @@
+$(document).ready(function() {
+    var profiles = [];
+
+    // Load profiles
+    $.get('/api/auth/profiles')
+        .done(function(data) {
+            profiles = data;
+            $('#loadingProfiles').hide();
+
+            if (profiles.length === 0) {
+                $('#noProfilesMsg').show();
+                return;
+            }
+
+            // Populate dropdown
+            var select = $('#profileSelect');
+            profiles.forEach(function(profile) {
+                var icon = profile.icon || 'fa-user';
+                select.append(
+                    $('<option></option>')
+                        .val(profile.id)
+                        .text(profile.name)
+                        .data('requiresPassword', profile.requiresPassword)
+                        .data('icon', icon)
+                );
+            });
+
+            $('#loginForm').show();
+        })
+        .fail(function() {
+            $('#loadingProfiles').hide();
+            $('#loginAlert').html(
+                '<div class="alert alert-danger">' +
+                '<i class="fas fa-exclamation-triangle me-2"></i>' +
+                'Erro ao carregar perfis. Tente novamente.' +
+                '</div>'
+            );
+        });
+
+    // Profile selection change
+    $('#profileSelect').on('change', function() {
+        var selectedOption = $(this).find(':selected');
+        var requiresPassword = selectedOption.data('requiresPassword');
+
+        if (requiresPassword) {
+            $('#credentialsSection').removeClass('disabled');
+            $('#username').prop('disabled', false).prop('required', true);
+            $('#password').prop('disabled', false).prop('required', true);
+            $('#togglePassword').prop('disabled', false);
+        } else {
+            $('#credentialsSection').addClass('disabled');
+            $('#username').prop('disabled', true).prop('required', false).val('');
+            $('#password').prop('disabled', true).prop('required', false).val('');
+            $('#togglePassword').prop('disabled', true);
+        }
+
+        $('#loginBtn').prop('disabled', false);
+        $('#loginAlert').empty();
+    });
+
+    // Toggle password visibility
+    $('#togglePassword').on('click', function() {
+        var passwordField = $('#password');
+        var icon = $(this).find('i');
+        if (passwordField.attr('type') === 'password') {
+            passwordField.attr('type', 'text');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            passwordField.attr('type', 'password');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+
+    // Form submission
+    $('#loginForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var profileId = $('#profileSelect').val();
+        if (!profileId) return;
+
+        var selectedOption = $('#profileSelect').find(':selected');
+        var requiresPassword = selectedOption.data('requiresPassword');
+
+        var loginData = {
+            profileId: profileId
+        };
+
+        if (requiresPassword) {
+            loginData.username = $('#username').val();
+            loginData.password = $('#password').val();
+
+            if (!loginData.username || !loginData.password) {
+                showLoginAlert('Preencha usuário e senha.', 'warning');
+                return;
+            }
+        }
+
+        // Show loading
+        var btn = $('#loginBtn');
+        btn.prop('disabled', true);
+        btn.html('<i class="fas fa-spinner fa-spin me-2"></i>Entrando...');
+
+        $.ajax({
+            url: '/api/auth/login',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(loginData)
+        })
+        .done(function(response) {
+            if (response.redirectUrl) {
+                window.location.href = response.redirectUrl;
+            }
+        })
+        .fail(function(xhr) {
+            var message = 'Erro ao realizar login.';
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                message = xhr.responseJSON.message;
+            }
+            showLoginAlert(message, 'danger');
+            $('#password').val('');
+        })
+        .always(function() {
+            btn.prop('disabled', false);
+            btn.html('<i class="fas fa-sign-in-alt me-2"></i>Entrar');
+        });
+    });
+
+    function showLoginAlert(message, type) {
+        $('#loginAlert').html(
+            '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+            '<i class="fas fa-' + (type === 'danger' ? 'exclamation-triangle' : 'info-circle') + ' me-2"></i>' +
+            message +
+            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+            '</div>'
+        );
+    }
+});

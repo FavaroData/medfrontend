@@ -1,0 +1,316 @@
+
+import os, textwrap
+
+OUT = r'C:\Users\suporte\Python\Nova\meddrive-dev'
+
+# ─── 1. IMAGER FRAGMENT ──────────────────────────────────────────────────────
+# Extraído do HTML real capturado do servidor (documento 1 da conversa)
+IMAGER_FRAGMENT = r"""<div id="mainDashboardContent" data-imager-his-type="TASY_JAVA">
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas me-2 fa-images"></i>
+                <span>Dashboard Imager</span>
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text">
+                    <i class="fas me-2 fa-hospital"></i>
+                    <span>Gerenciamento de Imagens Médicas</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <link rel="stylesheet" href="css/imager-3ff00425ea48d1e11f89995f77291b1b.css">
+
+    <div class="container-fluid">
+        <div id="alertsContainer" class="mb-4"></div>
+
+        <!-- Filters -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <label for="groupFilter" class="form-label">Filtrar por Grupo:</label>
+                        <select id="groupFilter" class="form-select"><option value="">Todos os Grupos</option></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="examFilter" class="form-label">Filtrar por Exame:</label>
+                        <select id="examFilter" class="form-select">
+                            <option value="">Todos os Exames</option>
+                            <option value="126">Angiofluoresceinografia</option>
+                            <option value="125">Angiografia OCT</option>
+                            <option value="87">Biometria Ultra-Sônica - Monocular</option>
+                            <option value="83">Campimetria Computadorizada 10-2</option>
+                            <option value="82">Campimetria Computadorizada 24-2</option>
+                            <option value="84">Campimetria Computadorizada 30-2</option>
+                            <option value="85">Ceratoscopia Atlas</option>
+                            <option value="124">Estereofoto</option>
+                            <option value="88">Microscopia Especular De Córnea</option>
+                            <option value="81">Paquimetria Ultra-Sônica - Monocular</option>
+                            <option value="123">Retinografia</option>
+                            <option value="89">Tomografia De Coerência Óptica Macula</option>
+                            <option value="127">Tomografia De Coerência Óptica Papila</option>
+                            <option value="80">Tomografia de Córnea - Galilei</option>
+                            <option value="86">Ultra-Sonografia</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="stepFilter" class="form-label">Filtrar por Etapa:</label>
+                        <select id="stepFilter" class="form-select">
+                            <option value="step1" selected>Pacientes Pendentes</option>
+                            <option value="step2">Imagens Pendentes</option>
+                            <option value="step3">Aprovações Pendentes</option>
+                            <option value="step4">Processados</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="dateFilter" class="form-label">Período <small class="text-muted">(Processados)</small>:</label>
+                        <select id="dateFilter" class="form-select">
+                            <option value="1">Último 1 dia</option>
+                            <option value="7" selected>Últimos 7 dias</option>
+                            <option value="14">Últimos 14 dias</option>
+                            <option value="30">Últimos 30 dias</option>
+                            <option value="60">Últimos 60 dias</option>
+                            <option value="90">Últimos 90 dias</option>
+                            <option value="">Todos os registros</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-end align-items-end h-100 flex-wrap gap-2">
+                    <button id="refreshImagerData" class="btn btn-primary">
+                        <i class="fas fa-refresh"></i> Atualizar
+                    </button>
+                    <button id="addPdfButton" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Adicionar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4" id="statsContainer">
+            <div class="col-md-3" id="step1-patients-card">
+                <div class="card stats-card bg-primary text-white active" style="cursor:pointer" onclick="applyStepFilter('step1')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Pacientes Pendentes</h6>
+                                <h4 class="stat-number mb-0">84</h4>
+                            </div>
+                            <div class="align-self-center"><i class="fas fa-2x fa-users"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="step2-files-card">
+                <div class="card stats-card bg-info text-white" style="cursor:pointer" onclick="applyStepFilter('step2')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Imagens Pendentes</h6>
+                                <h4 class="stat-number mb-0">6</h4>
+                            </div>
+                            <div class="align-self-center"><i class="fas fa-2x fa-file-pdf"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="step3-queue-card">
+                <div class="card stats-card bg-success text-white" style="cursor:pointer" onclick="applyStepFilter('step3')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Aprovações Pendentes</h6>
+                                <h4 class="stat-number mb-0">4</h4>
+                            </div>
+                            <div class="align-self-center"><i class="fas fa-2x fa-file-circle-check"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="step4-processed-card">
+                <div class="card stats-card bg-warning text-dark" style="cursor:pointer" onclick="applyStepFilter('step4')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">Processados</h6>
+                                <h4 class="stat-number mb-0">14747</h4>
+                            </div>
+                            <div class="align-self-center"><i class="fas fa-2x fa-check-circle"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Title -->
+        <div class="table-title-section mb-3">
+            <h5 id="tableTitle"><i class="fas fa-table"></i> Etapa 1 - Pacientes</h5>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="table-toolbar d-flex flex-row align-items-center justify-content-between gap-3 mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <label for="imagerItemsPerPageSelect" class="mb-0 text-nowrap" style="font-size:0.875rem;">Exibir:</label>
+                <select class="form-select form-select-sm" id="imagerItemsPerPageSelect" style="width:140px">
+                    <option value="10">10 itens</option>
+                    <option value="25" selected>25 itens</option>
+                    <option value="50">50 itens</option>
+                    <option value="100">100 itens</option>
+                </select>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div style="width:400px">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="imagerSearchInput" placeholder="Buscar..." autocomplete="off">
+                        <button class="btn btn-outline-secondary" type="button" id="imagerClearSearchBtn" style="display:none">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worklist Table -->
+        <div class="table-responsive">
+            <table id="imagerWorklistTable" class="table table-hover compact dataTable no-footer">
+                <thead class="table-dark" id="tableHeader">
+                    <tr>
+                        <th style="width:10%">Data</th>
+                        <th style="width:30%">Paciente</th>
+                        <th style="width:26%">Procedimento</th>
+                        <th style="width:16%">Médico</th>
+                        <th style="width:18%" class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="text-nowrap align-middle">09/06/26 08:19</td><td class="text-nowrap align-middle">Joseane Aparecida Lopes<br><small class="text-muted">Nasc: 16/04/1968 | CPF: 740.195.979-87</small></td><td class="text-nowrap align-middle">Angiofluoresceinografia - Monocular<br><small class="text-muted">Atend: 181781 | Prescr: 324121-1 | Acc: 3241211</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 08:19</td><td class="text-nowrap align-middle">Alvisio Ribeiro da Silva<br><small class="text-muted">Nasc: 11/03/1942 | CPF: 033.110.909-34</small></td><td class="text-nowrap align-middle">Retinografia - Monocular<br><small class="text-muted">Atend: 181780 | Prescr: 324120-2 | Acc: 3241202</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 08:19</td><td class="text-nowrap align-middle">Alvisio Ribeiro da Silva<br><small class="text-muted">Nasc: 11/03/1942 | CPF: 033.110.909-34</small></td><td class="text-nowrap align-middle">Tomografia De Coerencia Optica Monocular<br><small class="text-muted">Atend: 181780 | Prescr: 324120-1 | Acc: 3241201</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 08:06</td><td class="text-nowrap align-middle">Marlene da Silva Santana<br><small class="text-muted">Nasc: 13/10/1950 | CPF: 016.082.269-64</small></td><td class="text-nowrap align-middle">Tomografia De Coerencia Optica Monocular<br><small class="text-muted">Atend: 181779 | Prescr: 324119-1 | Acc: 3241191</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:53</td><td class="text-nowrap align-middle">Samuel Evangelista de Carvalho<br><small class="text-muted">Nasc: 06/04/1956 | CPF: 333.835.029-53</small></td><td class="text-nowrap align-middle">Estéreo-Foto De Papila - Monocular<br><small class="text-muted">Atend: 181778 | Prescr: 324117-3 | Acc: 3241173</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:53</td><td class="text-nowrap align-middle">Samuel Evangelista de Carvalho<br><small class="text-muted">Nasc: 06/04/1956 | CPF: 333.835.029-53</small></td><td class="text-nowrap align-middle">Retinografia - Monocular<br><small class="text-muted">Atend: 181778 | Prescr: 324117-1 | Acc: 3241171</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:41</td><td class="text-nowrap align-middle">Pergentina Vanusia de Andrade<br><small class="text-muted">Nasc: 11/08/1955 | CPF: 011.722.668-83</small></td><td class="text-nowrap align-middle">Angiofluoresceinografia - Monocular<br><small class="text-muted">Atend: 181775 | Prescr: 324115-2 | Acc: 3241152</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:28</td><td class="text-nowrap align-middle">Rosineia Bordinhao<br><small class="text-muted">Nasc: 11/07/1972 | CPF: 842.345.809-10</small></td><td class="text-nowrap align-middle">Retinografia<br><small class="text-muted">Atend: 181774 | Prescr: 324112-3 | Acc: 3241123</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:28</td><td class="text-nowrap align-middle">Rosineia Bordinhao<br><small class="text-muted">Nasc: 11/07/1972 | CPF: 842.345.809-10</small></td><td class="text-nowrap align-middle">Tomografia de Coerência Óptica - OCT<br><small class="text-muted">Atend: 181774 | Prescr: 324112-1 | Acc: 3241121</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:26</td><td class="text-nowrap align-middle">Sergio Roberto Biss<br><small class="text-muted">Nasc: 14/10/1958 | CPF: 253.329.029-72</small></td><td class="text-nowrap align-middle">Retinografia - Monocular<br><small class="text-muted">Atend: 181773 | Prescr: 324111-6 | Acc: 3241116</small></td><td class="text-nowrap align-middle">Aramis de Castro Bach</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:26</td><td class="text-nowrap align-middle">Sergio Roberto Biss<br><small class="text-muted">Nasc: 14/10/1958 | CPF: 253.329.029-72</small></td><td class="text-nowrap align-middle">Microscopia Especular De Córnea - Monocular<br><small class="text-muted">Atend: 181773 | Prescr: 324111-2 | Acc: 3241112</small></td><td class="text-nowrap align-middle">Sandra Zandavalli Avila</td><td class="text-nowrap align-middle text-center"><span class="badge bg-info">Pendente Aprovação</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">09/06/26 07:26</td><td class="text-nowrap align-middle">Sergio Roberto Biss<br><small class="text-muted">Nasc: 14/10/1958 | CPF: 253.329.029-72</small></td><td class="text-nowrap align-middle">Biometria Ultra-Sônica - Monocular<br><small class="text-muted">Atend: 181773 | Prescr: 324111-1 | Acc: 3241111</small></td><td class="text-nowrap align-middle">Sandra Zandavalli Avila</td><td class="text-nowrap align-middle text-center"><span class="badge bg-info">Pendente Aprovação</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">08/06/26 08:59</td><td class="text-nowrap align-middle">Cleonice Antonia Zanlorenzi<br><small class="text-muted">Nasc: 13/06/1948 | CPF: 185.684.679-20</small></td><td class="text-nowrap align-middle">Microscopia Especular De Córnea - Monocular<br><small class="text-muted">Atend: 181673 | Prescr: 323996-2 | Acc: 3239962</small></td><td class="text-nowrap align-middle">Virginia Santos de Paula Soares Pilati</td><td class="text-nowrap align-middle text-center"><span class="badge bg-info">Pendente Aprovação</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">08/06/26 07:52</td><td class="text-nowrap align-middle">Paulo Eduardo Guimaraes Stroparo<br><small class="text-muted">Nasc: 04/08/1971 | CPF: 864.502.639-20</small></td><td class="text-nowrap align-middle">Ceratoscopia Computadorizada - Monocular<br><small class="text-muted">Atend: 181659 | Prescr: 323987-3 | Acc: 3239873</small></td><td class="text-nowrap align-middle">Virginia Santos de Paula Soares Pilati</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">08/06/26 07:31</td><td class="text-nowrap align-middle">Neusa Marli Vieira Godoy<br><small class="text-muted">Nasc: 09/01/1954 | CPF: 171.950.559-49</small></td><td class="text-nowrap align-middle">Angiofluoresceinografia - Monocular<br><small class="text-muted">Atend: 181654 | Prescr: 323984-1 | Acc: 3239841</small></td><td class="text-nowrap align-middle">Alex Treiger Grupenmacher</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">27/05/26 07:42</td><td class="text-nowrap align-middle">Pedro Luiz Bastian Vidal<br><small class="text-muted">Nasc: 25/02/1983 | CPF: 038.123.129-13</small></td><td class="text-nowrap align-middle">Paquimetria Ultra-Sônica - Monocular<br><small class="text-muted">Atend: 180910 | Prescr: 323213-2 | Acc: 3232132</small></td><td class="text-nowrap align-middle">Sandra Zandavalli Avila</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                    <tr><td class="text-nowrap align-middle">20/05/26 13:01</td><td class="text-nowrap align-middle">Lais do Rocio Anachewski<br><small class="text-muted">Nasc: 25/09/1954 | CPF: 232.333.979-68</small></td><td class="text-nowrap align-middle">Paquimetria Ultra-Sônica - Monocular<br><small class="text-muted">Atend: 180283 | Prescr: 322563-4 | Acc: 3225634</small></td><td class="text-nowrap align-middle">Virginia Santos de Paula Soares Pilati</td><td class="text-nowrap align-middle text-center"><span class="badge bg-warning">Pendente</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top:1rem; color: var(--text-muted); font-size:0.875rem;">
+            Mostrando de 1 até 17 de 84 registros
+        </div>
+    </div>
+</div>
+"""
+
+# ─── 2. DEV OVERRIDE JS ──────────────────────────────────────────────────────
+DEV_OVERRIDE_JS = r"""/**
+ * dev-override.js
+ * Intercepta fetch e $.ajax para que o dashboard funcione
+ * sem o backend Spring Boot rodando.
+ *
+ * Carregue ANTES de dashboard-*.js no index.html.
+ */
+(function () {
+    'use strict';
+
+    const _fetch = window.fetch.bind(window);
+
+    // Rotas que retornam o fragment estático do Imager
+    const IMAGER_FRAGMENT_ROUTES = [
+        '/imager/fragments/dashboard-data'
+    ];
+
+    // Rotas que devemos silenciar (retornam vazio sem erro)
+    const SILENT_PREFIXES = [
+        '/api/',
+        '/fragments/home',
+        '/dicom',
+        '/gateway',
+        '/report',
+        '/admin',
+        '/configurations'
+    ];
+
+    function isSilent(url) {
+        return SILENT_PREFIXES.some(p => url.includes(p));
+    }
+
+    function isImagerFragment(url) {
+        return IMAGER_FRAGMENT_ROUTES.some(r => url.includes(r));
+    }
+
+    function makeResponse(body, status) {
+        return new Response(body, {
+            status: status || 200,
+            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        });
+    }
+
+    // Intercepta fetch nativo
+    window.fetch = function (input, init) {
+        const url = typeof input === 'string' ? input : input.url;
+
+        if (isImagerFragment(url)) {
+            // Carrega o fragment estático local
+            return _fetch('imager-fragment.html').catch(function () {
+                return makeResponse('<p class="text-muted m-4">fragment não encontrado</p>');
+            });
+        }
+
+        if (isSilent(url)) {
+            return Promise.resolve(makeResponse('<div></div>'));
+        }
+
+        return _fetch(input, init);
+    };
+
+    // Intercepta jQuery $.ajax / $.get / $.post
+    if (typeof jQuery !== 'undefined') {
+        var _ajax = jQuery.ajax;
+        jQuery.ajax = function (url, options) {
+            var opts = (typeof url === 'object') ? url : (options || {});
+            var reqUrl = (typeof url === 'string') ? url : (opts.url || '');
+
+            if (isSilent(reqUrl)) {
+                var d = jQuery.Deferred();
+                setTimeout(function () { d.resolve({}); }, 0);
+                return d.promise();
+            }
+            return _ajax.apply(this, arguments);
+        };
+    }
+
+    console.log('[dev-override] ativo — fetch e $.ajax interceptados');
+})();
+"""
+
+# ─── 3. ESCREVE OS ARQUIVOS ──────────────────────────────────────────────────
+frag_path = os.path.join(OUT, 'imager-fragment.html')
+with open(frag_path, 'w', encoding='utf-8') as f:
+    f.write(IMAGER_FRAGMENT)
+print(f'Criado: {frag_path}')
+
+js_dir = os.path.join(OUT, 'js')
+os.makedirs(js_dir, exist_ok=True)
+override_path = os.path.join(js_dir, 'dev-override.js')
+with open(override_path, 'w', encoding='utf-8') as f:
+    f.write(DEV_OVERRIDE_JS)
+print(f'Criado: {override_path}')
+
+print('\nPróximo passo: adicione no dashboard.html, ANTES do dashboard-*.js:')
+print('  <script src="js/dev-override.js"></script>')
