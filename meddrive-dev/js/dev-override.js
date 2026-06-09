@@ -11,23 +11,23 @@
 
     // ── Dados estáticos worklist ───────────────────────────────────────────
     const WORKLIST_DATA = [
-        { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Joseane Aparecida Lopes", dtNascimento: "1968-04-16", cpf: "74019597987", procedureName: "Angiofluoresceinografia - Monocular", nrAtendimento: "181781", nrPrescricao: "324121", nrSeqPrescricao: "1", accessionNumber: "3241211", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Alvisio Ribeiro da Silva", dtNascimento: "1942-03-11", cpf: "03311090934", procedureName: "Retinografia - Monocular", nrAtendimento: "181780", nrPrescricao: "324120", nrSeqPrescricao: "2", accessionNumber: "3241202", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Alvisio Ribeiro da Silva", dtNascimento: "1942-03-11", cpf: "03311090934", procedureName: "Tomografia De Coerencia Optica Monocular", nrAtendimento: "181780", nrPrescricao: "324120", nrSeqPrescricao: "1", accessionNumber: "3241201", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T08:06:00", nmPaciente: "Marlene da Silva Santana", dtNascimento: "1950-10-13", cpf: "01608226964", procedureName: "Tomografia De Coerencia Optica Monocular", nrAtendimento: "181779", nrPrescricao: "324119", nrSeqPrescricao: "1", accessionNumber: "3241191", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:53:00", nmPaciente: "Samuel Evangelista de Carvalho", dtNascimento: "1956-04-06", cpf: "33383502953", procedureName: "Estéreo-Foto De Papila - Monocular", nrAtendimento: "181778", nrPrescricao: "324117", nrSeqPrescricao: "3", accessionNumber: "3241173", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:53:00", nmPaciente: "Samuel Evangelista de Carvalho", dtNascimento: "1956-04-06", cpf: "33383502953", procedureName: "Retinografia - Monocular", nrAtendimento: "181778", nrPrescricao: "324117", nrSeqPrescricao: "1", accessionNumber: "3241171", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:41:00", nmPaciente: "Pergentina Vanusia de Andrade", dtNascimento: "1955-08-11", cpf: "01172266883", procedureName: "Angiofluoresceinografia - Monocular", nrAtendimento: "181775", nrPrescricao: "324115", nrSeqPrescricao: "2", accessionNumber: "3241152", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:28:00", nmPaciente: "Rosineia Bordinhao", dtNascimento: "1972-07-11", cpf: "84234580910", procedureName: "Retinografia", nrAtendimento: "181774", nrPrescricao: "324112", nrSeqPrescricao: "3", accessionNumber: "3241123", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:28:00", nmPaciente: "Rosineia Bordinhao", dtNascimento: "1972-07-11", cpf: "84234580910", procedureName: "Tomografia de Coerência Óptica - OCT", nrAtendimento: "181774", nrPrescricao: "324112", nrSeqPrescricao: "1", accessionNumber: "3241121", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:26:00", nmPaciente: "Sergio Roberto Biss", dtNascimento: "1958-10-14", cpf: "25332902972", procedureName: "Retinografia - Monocular", nrAtendimento: "181773", nrPrescricao: "324111", nrSeqPrescricao: "6", accessionNumber: "3241116", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-09T07:26:00", nmPaciente: "Sergio Roberto Biss", dtNascimento: "1958-10-14", cpf: "25332902972", procedureName: "Microscopia Especular De Córnea - Monocular", nrAtendimento: "181773", nrPrescricao: "324111", nrSeqPrescricao: "2", accessionNumber: "3241112", referringPhysician: "Sandra Zandavalli Avila", stepStatus: "step3", dsStatus: "Pendente Aprovação" },
-        { orderDateTime: "2026-06-09T07:26:00", nmPaciente: "Sergio Roberto Biss", dtNascimento: "1958-10-14", cpf: "25332902972", procedureName: "Biometria Ultra-Sônica - Monocular", nrAtendimento: "181773", nrPrescricao: "324111", nrSeqPrescricao: "1", accessionNumber: "3241111", referringPhysician: "Sandra Zandavalli Avila", stepStatus: "step3", dsStatus: "Pendente Aprovação" },
-        { orderDateTime: "2026-06-08T08:59:00", nmPaciente: "Cleonice Antonia Zanlorenzi", dtNascimento: "1948-06-13", cpf: "18568467920", procedureName: "Microscopia Especular De Córnea - Monocular", nrAtendimento: "181673", nrPrescricao: "323996", nrSeqPrescricao: "2", accessionNumber: "3239962", referringPhysician: "Virginia Santos de Paula Soares Pilati", stepStatus: "step3", dsStatus: "Pendente Aprovação" },
-        { orderDateTime: "2026-06-08T07:52:00", nmPaciente: "Paulo Eduardo Guimaraes Stroparo", dtNascimento: "1971-08-04", cpf: "86450263920", procedureName: "Ceratoscopia Computadorizada - Monocular", nrAtendimento: "181659", nrPrescricao: "323987", nrSeqPrescricao: "3", accessionNumber: "3239873", referringPhysician: "Virginia Santos de Paula Soares Pilati", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-06-08T07:31:00", nmPaciente: "Neusa Marli Vieira Godoy", dtNascimento: "1954-01-09", cpf: "17195055949", procedureName: "Angiofluoresceinografia - Monocular", nrAtendimento: "181654", nrPrescricao: "323984", nrSeqPrescricao: "1", accessionNumber: "3239841", referringPhysician: "Alex Treiger Grupenmacher", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-05-27T07:42:00", nmPaciente: "Pedro Luiz Bastian Vidal", dtNascimento: "1983-02-25", cpf: "03812312913", procedureName: "Paquimetria Ultra-Sônica - Monocular", nrAtendimento: "180910", nrPrescricao: "323213", nrSeqPrescricao: "2", accessionNumber: "3232132", referringPhysician: "Sandra Zandavalli Avila", stepStatus: "step1", dsStatus: "Pendente" },
-        { orderDateTime: "2026-05-20T13:01:00", nmPaciente: "Lais do Rocio Anachewski", dtNascimento: "1954-09-25", cpf: "23233397968", procedureName: "Paquimetria Ultra-Sônica - Monocular", nrAtendimento: "180283", nrPrescricao: "322563", nrSeqPrescricao: "4", accessionNumber: "3225634", referringPhysician: "Virginia Santos de Paula Soares Pilati", stepStatus: "step1", dsStatus: "Pendente" }
+        { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Joseane Aparecida Lopes", dtNascimento: "1968-04-16", cpf: "74019597987", procedimento: "Angiofluoresceinografia - Monocular", visitNumber: "181781", nrPrescricao: "324121", nrSeqPrescricao: "1", accessionNumber: "3241211", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Alvisio Ribeiro da Silva", dtNascimento: "1942-03-11", cpf: "03311090934", procedimento: "Retinografia - Monocular", visitNumber: "181780", nrPrescricao: "324120", nrSeqPrescricao: "2", accessionNumber: "3241202", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Alvisio Ribeiro da Silva", dtNascimento: "1942-03-11", cpf: "03311090934", procedimento: "Tomografia De Coerencia Optica Monocular", visitNumber: "181780", nrPrescricao: "324120", nrSeqPrescricao: "1", accessionNumber: "3241201", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T08:06:00", nmPaciente: "Marlene da Silva Santana", dtNascimento: "1950-10-13", cpf: "01608226964", procedimento: "Tomografia De Coerencia Optica Monocular", visitNumber: "181779", nrPrescricao: "324119", nrSeqPrescricao: "1", accessionNumber: "3241191", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:53:00", nmPaciente: "Samuel Evangelista de Carvalho", dtNascimento: "1956-04-06", cpf: "33383502953", procedimento: "Estéreo-Foto De Papila - Monocular", visitNumber: "181778", nrPrescricao: "324117", nrSeqPrescricao: "3", accessionNumber: "3241173", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:53:00", nmPaciente: "Samuel Evangelista de Carvalho", dtNascimento: "1956-04-06", cpf: "33383502953", procedimento: "Retinografia - Monocular", visitNumber: "181778", nrPrescricao: "324117", nrSeqPrescricao: "1", accessionNumber: "3241171", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:41:00", nmPaciente: "Pergentina Vanusia de Andrade", dtNascimento: "1955-08-11", cpf: "01172266883", procedimento: "Angiofluoresceinografia - Monocular", visitNumber: "181775", nrPrescricao: "324115", nrSeqPrescricao: "2", accessionNumber: "3241152", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:28:00", nmPaciente: "Rosineia Bordinhao", dtNascimento: "1972-07-11", cpf: "84234580910", procedimento: "Retinografia", visitNumber: "181774", nrPrescricao: "324112", nrSeqPrescricao: "3", accessionNumber: "3241123", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:28:00", nmPaciente: "Rosineia Bordinhao", dtNascimento: "1972-07-11", cpf: "84234580910", procedimento: "Tomografia de Coerência Óptica - OCT", visitNumber: "181774", nrPrescricao: "324112", nrSeqPrescricao: "1", accessionNumber: "3241121", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:26:00", nmPaciente: "Sergio Roberto Biss", dtNascimento: "1958-10-14", cpf: "25332902972", procedimento: "Retinografia - Monocular", visitNumber: "181773", nrPrescricao: "324111", nrSeqPrescricao: "6", accessionNumber: "3241116", nmMedico: "Aramis de Castro Bach", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-09T07:26:00", nmPaciente: "Sergio Roberto Biss", dtNascimento: "1958-10-14", cpf: "25332902972", procedimento: "Microscopia Especular De Córnea - Monocular", visitNumber: "181773", nrPrescricao: "324111", nrSeqPrescricao: "2", accessionNumber: "3241112", nmMedico: "Sandra Zandavalli Avila", stepStatus: "step3", processingStatus: "WAITING_APPROVAL", dsStatus: "Pendente Aprovação" },
+        { orderDateTime: "2026-06-09T07:26:00", nmPaciente: "Sergio Roberto Biss", dtNascimento: "1958-10-14", cpf: "25332902972", procedimento: "Biometria Ultra-Sônica - Monocular", visitNumber: "181773", nrPrescricao: "324111", nrSeqPrescricao: "1", accessionNumber: "3241111", nmMedico: "Sandra Zandavalli Avila", stepStatus: "step3", processingStatus: "WAITING_APPROVAL", dsStatus: "Pendente Aprovação" },
+        { orderDateTime: "2026-06-08T08:59:00", nmPaciente: "Cleonice Antonia Zanlorenzi", dtNascimento: "1948-06-13", cpf: "18568467920", procedimento: "Microscopia Especular De Córnea - Monocular", visitNumber: "181673", nrPrescricao: "323996", nrSeqPrescricao: "2", accessionNumber: "3239962", nmMedico: "Virginia Santos de Paula Soares Pilati", stepStatus: "step3", processingStatus: "WAITING_APPROVAL", dsStatus: "Pendente Aprovação" },
+        { orderDateTime: "2026-06-08T07:52:00", nmPaciente: "Paulo Eduardo Guimaraes Stroparo", dtNascimento: "1971-08-04", cpf: "86450263920", procedimento: "Ceratoscopia Computadorizada - Monocular", visitNumber: "181659", nrPrescricao: "323987", nrSeqPrescricao: "3", accessionNumber: "3239873", nmMedico: "Virginia Santos de Paula Soares Pilati", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-06-08T07:31:00", nmPaciente: "Neusa Marli Vieira Godoy", dtNascimento: "1954-01-09", cpf: "17195055949", procedimento: "Angiofluoresceinografia - Monocular", visitNumber: "181654", nrPrescricao: "323984", nrSeqPrescricao: "1", accessionNumber: "3239841", nmMedico: "Alex Treiger Grupenmacher", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-05-27T07:42:00", nmPaciente: "Pedro Luiz Bastian Vidal", dtNascimento: "1983-02-25", cpf: "03812312913", procedimento: "Paquimetria Ultra-Sônica - Monocular", visitNumber: "180910", nrPrescricao: "323213", nrSeqPrescricao: "2", accessionNumber: "3232132", nmMedico: "Sandra Zandavalli Avila", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" },
+        { orderDateTime: "2026-05-20T13:01:00", nmPaciente: "Lais do Rocio Anachewski", dtNascimento: "1954-09-25", cpf: "23233397968", procedimento: "Paquimetria Ultra-Sônica - Monocular", visitNumber: "180283", nrPrescricao: "322563", nrSeqPrescricao: "4", accessionNumber: "3225634", nmMedico: "Virginia Santos de Paula Soares Pilati", stepStatus: "step1", processingStatus: "PENDING", dsStatus: "Pendente" }
     ];
 
     // ── Mocks de API ───────────────────────────────────────────────────────
@@ -117,7 +117,7 @@
         return url.includes('/api/imager/') && url.includes('datatable');
     }
 
-    function buildDatatableResponse(urlStr) {
+    function buildDatatableData(urlStr) {
         const u = new URL(urlStr, 'http://localhost');
         const draw = parseInt(u.searchParams.get('draw') || '1');
         const start = parseInt(u.searchParams.get('start') || '0');
@@ -129,18 +129,17 @@
         if (search) {
             filtered = filtered.filter(r =>
                 r.nmPaciente.toLowerCase().includes(search) ||
-                r.procedureName.toLowerCase().includes(search) ||
-                r.referringPhysician.toLowerCase().includes(search)
+                r.procedimento.toLowerCase().includes(search) ||
+                r.nmMedico.toLowerCase().includes(search)
             );
         }
 
         const total = filtered.length;
-        return jsonResp({
-            draw,
-            recordsTotal: total,
-            recordsFiltered: total,
-            data: filtered.slice(start, start + length)
-        });
+        return { draw, recordsTotal: total, recordsFiltered: total, data: filtered.slice(start, start + length) };
+    }
+
+    function buildDatatableResponse(urlStr) {
+        return jsonResp(buildDatatableData(urlStr));
     }
 
     // ── Intercepta fetch ───────────────────────────────────────────────────
@@ -150,6 +149,7 @@
         // Fragment local
         const fragmentFile = matchFragment(url);
         if (fragmentFile) {
+            console.log('[dev-override] fragment fetch:', url, '->', fragmentFile);
             return _fetch(fragmentFile).catch(() =>
                 htmlResp('<p class="text-muted m-4">Fragment não encontrado: ' + fragmentFile + '</p>')
             );
@@ -181,6 +181,21 @@
             const opts = (typeof url === 'object') ? url : (options || {});
             const reqUrl = (typeof url === 'string') ? url : (opts.url || '');
 
+            if (isDataTable(reqUrl)) {
+                const d = jQuery.Deferred();
+                const dataParams = opts.data || {};
+                const queryStr = typeof dataParams === 'string' ? dataParams
+                    : Object.entries(dataParams).map(([k, v]) => k + '=' + encodeURIComponent(v ?? '')).join('&');
+                const sep = reqUrl.includes('?') ? '&' : '?';
+                const fullUrl = queryStr ? reqUrl + sep + queryStr : reqUrl;
+                const data = buildDatatableData(fullUrl);
+                setTimeout(function () {
+                    if (typeof opts.success === 'function') opts.success(data);
+                    d.resolve(data);
+                }, 0);
+                return d.promise();
+            }
+
             const mock = matchMock(reqUrl);
             if (mock !== null) {
                 const d = jQuery.Deferred();
@@ -198,12 +213,31 @@
         };
     }
 
-    // ── Silencia erro de cleanup do DataTables ─────────────────────────────
-    const _origCleanup = window.cleanupImagerDashboard;
-    window.cleanupImagerDashboard = function () {
-        try { if (typeof _origCleanup === 'function') _origCleanup(); }
-        catch (e) { /* parentNode null durante navegação */ }
-    };
+    // ── Garante que cleanupImagerDashboard seja sempre seguro ─────────────
+    // imager-952.js sobrescreve window.cleanupImagerDashboard na carga do módulo
+    // (após dev-override.js). defineProperty intercepta essa atribuição e mantém
+    // o wrapper de try-catch ativo para que erros no destroy() não bloqueiem
+    // o loadContent do dashboard.js.
+    let _imagerCleanup = null;
+    Object.defineProperty(window, 'cleanupImagerDashboard', {
+        configurable: true,
+        enumerable: true,
+        get() {
+            return function safeCleanup() {
+                console.log('[dev-override] cleanupImagerDashboard chamado, _imagerCleanup:', typeof _imagerCleanup);
+                try {
+                    if (typeof _imagerCleanup === 'function') _imagerCleanup();
+                    console.log('[dev-override] cleanup OK');
+                } catch (e) {
+                    console.warn('[dev-override] cleanupImagerDashboard silenciado:', e.message);
+                }
+            };
+        },
+        set(fn) {
+            console.log('[dev-override] cleanupImagerDashboard definido:', typeof fn);
+            _imagerCleanup = fn;
+        }
+    });
 
-    console.log('[dev-override] v4 ativo — todos os fragments mapeados');
+    console.log('[dev-override] v4 ativo — diagnóstico ligado');
 })();
