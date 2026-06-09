@@ -1,153 +1,217 @@
-<!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meddrive - Login</title>
+<div>
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas me-2 fa-file-medical"></i>
+            <span>Laudos</span>
+        </a>
+        <div class="navbar-nav ms-auto">
+            <!-- Custom content (for special cases like status indicators) -->
+            
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+            <!-- Default description span -->
+            <span class="navbar-text">
+                <i class="fas me-2 fa-file-medical"></i>
+                <span>Digitação e revisão de laudos locais</span>
+            </span>
+        </div>
+    </div>
+</nav>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/webjars/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS (report.css) já carregado top-level em dashboard.html -->
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/styles-53b7c733516de1d1ff148cf9efa3f89b.css">
-    <link rel="stylesheet" href="/css/light-theme-233e0eb8e345e2ea1649b6376bcf9c1f.css">
-    <link rel="stylesheet" href="/css/dark-theme-e8bd8ddc0e7e37f8d1b0c0470f387ba4.css">
+    <div class="container-fluid">
+        <!-- Alerts Container -->
+        <div id="alertsContainer" class="mb-3"></div>
 
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-color, #f5f6fa);
-        }
-        .login-container {
-            width: 100%;
-            max-width: 440px;
-            padding: 2rem;
-        }
-        .login-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .login-header {
-            text-align: center;
-            padding: 2rem 2rem 1rem;
-        }
-        .login-header img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-        }
-        .login-header h4 {
-            margin-bottom: 0.25rem;
-            font-weight: 300;
-        }
-        .login-header .subtitle {
-            font-size: 0.85rem;
-            color: #6c757d;
-        }
-        .login-body {
-            padding: 1.5rem 2rem 2rem;
-        }
-        .profile-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .profile-option i {
-            width: 20px;
-            text-align: center;
-            color: #6c757d;
-        }
-        .no-profiles-msg {
-            text-align: center;
-            padding: 1rem;
-            color: #6c757d;
-        }
-        .credentials-section {
-            transition: opacity 0.3s ease;
-        }
-        .credentials-section.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="card login-card">
-            <div class="login-header">
-                <img src="/images/web-app-manifest-512x512.png" alt="Meddrive Logo">
-                <h4>Meddrive</h4>
-                <p class="subtitle">MIMPS - Medical Image Management & Processing System</p>
-            </div>
-            <div class="login-body">
-                <!-- Alert container -->
-                <div id="loginAlert"></div>
-
-                <!-- No profiles message (hidden by default) -->
-                <div id="noProfilesMsg" class="no-profiles-msg" style="display: none;">
-                    <i class="fas fa-exclamation-circle fa-2x mb-2 text-warning"></i>
-                    <p>Nenhum perfil configurado.<br>Contacte o administrador.</p>
-                </div>
-
-                <!-- Login form -->
-                <form id="loginForm" style="display: none;">
-                    <div class="mb-3">
-                        <label for="profileSelect" class="form-label">Perfil de Acesso</label>
-                        <select class="form-select" id="profileSelect" required>
-                            <option value="" disabled selected>Selecione um perfil...</option>
+        <!-- Filters and Action Buttons -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <label for="reportStatusFilter" class="form-label">Status:</label>
+                        <select id="reportStatusFilter" class="form-select">
+                            <option value="AWAITING_REPORT" selected>Aguardando digitação</option>
+                            <option value="IN_REVIEW">Em revisão</option>
+                            <option value="APPROVED">Aprovados</option>
+                            <option value="DELIVERED">Entregues</option>
+                            <option value="RETRY_EXHAUSTED">Falhas (retry esgotado)</option>
+                            <option value="CANCELLED">Cancelados</option>
+                            <option value="ALL">Todos</option>
                         </select>
                     </div>
-
-                    <div id="credentialsSection" class="credentials-section disabled">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuário</label>
-                            <input type="text" class="form-control" id="username" placeholder="Digite seu usuário" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Senha</label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="password" placeholder="Digite sua senha" disabled>
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" disabled>
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="col-md-4">
+                        <label for="reportDateFilter" class="form-label">Período:</label>
+                        <select id="reportDateFilter" class="form-select">
+                            <option value="7" selected>Últimos 7 dias</option>
+                            <option value="14">Últimos 14 dias</option>
+                            <option value="30">Últimos 30 dias</option>
+                            <option value="60">Últimos 60 dias</option>
+                            <option value="90">Últimos 90 dias</option>
+                            <option value="">Todos os registros</option>
+                        </select>
                     </div>
-
-                    <button type="submit" class="btn btn-primary w-100 mt-2" id="loginBtn" disabled>
-                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-end align-items-end h-100 flex-wrap gap-2">
+                    <button id="reportReviewQueueNavBtn" class="btn btn-outline-info">
+                        <i class="fas fa-glasses"></i> Fila de Revisão
                     </button>
-                </form>
+                    <button id="reportTemplatesNavBtn" class="btn btn-outline-secondary">
+                        <i class="fas fa-file-alt"></i> Templates
+                    </button>
+                    <button id="reportRefreshBtn" class="btn btn-primary">
+                        <i class="fas fa-sync"></i> Atualizar
+                    </button>
+                </div>
+            </div>
+        </div>
 
-                <!-- Loading -->
-                <div id="loadingProfiles" class="text-center py-3">
-                    <div class="spinner-border spinner-border-sm text-primary" role="status">
-                        <span class="visually-hidden">Carregando...</span>
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3"
+         id="reportStatAwaitingCard">
+        <div class="card stats-card bg-secondary text-white"
+             style="cursor: pointer;" onclick="reportFilterByStatus(&#39;AWAITING_REPORT&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Aguardando laudo</h6>
+                        <h4 class="stat-number mb-0"
+                            id="reportStatAwaitingValue">-</h4>
                     </div>
-                    <span class="ms-2 text-muted">Carregando perfis...</span>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-hourglass-half"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-3"
+         id="reportStatReviewCard">
+        <div class="card stats-card bg-primary text-white"
+             style="cursor: pointer;" onclick="reportFilterByStatus(&#39;IN_REVIEW&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Em revisão</h6>
+                        <h4 class="stat-number mb-0"
+                            id="reportStatReviewValue">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-glasses"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-3"
+         id="reportStatApprovedCard">
+        <div class="card stats-card bg-success text-white"
+             style="cursor: pointer;" onclick="reportFilterByStatus(&#39;APPROVED&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Aprovados</h6>
+                        <h4 class="stat-number mb-0"
+                            id="reportStatApprovedValue">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-3"
+         id="reportStatFailedCard">
+        <div class="card stats-card bg-danger text-white"
+             style="cursor: pointer;" onclick="reportFilterByStatus(&#39;RETRY_EXHAUSTED&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Falhas</h6>
+                        <h4 class="stat-number mb-0"
+                            id="reportStatFailedValue">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-times-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+
+        <!-- Table Title -->
+        <div class="table-title-section mb-3">
+            <h5 class="mb-0" id="reportListTitle"><i class="fas fa-list me-2"></i>Laudos</h5>
+        </div>
+
+        <!-- Toolbar with controls (itens por página + busca livre) -->
+        <div class="table-toolbar d-flex flex-row align-items-center justify-content-between gap-3 mb-3">
+
+        <!-- Items per page selector (left side) -->
+        <div class="d-flex align-items-center gap-2">
+            <label for="reportItemsPerPageSelect"
+                   class="mb-0 text-nowrap"
+                   style="font-size: 0.875rem;">
+                Exibir:
+            </label>
+            <select class="form-select form-select-sm"
+                    id="reportItemsPerPageSelect"
+                    style="width: 140px;">
+                <option value="10">10 itens</option>
+                <option value="25" selected="selected">25 itens</option>
+                <option value="50">50 itens</option>
+                <option value="100">100 itens</option>
+            </select>
+        </div>
+
+        <!-- Search Box (right side) -->
+        <div class="d-flex align-items-center gap-2">
+            <div style="width: 500px;">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text"
+                           class="form-control"
+                           id="reportSearchInput"
+                           placeholder="Buscar por paciente, procedimento, médico, accession..."
+                           autocomplete="off">
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="reportClearSearchBtn"
+                            style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Theme Manager -->
-    <script src="/js/theme-manager-a7e10798c3d2c652368ad84430194406.js"></script>
+        <!-- Awaiting Table -->
+        <div class="table-responsive">
+            <table id="reportAwaitingTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Accession</th>
+                        <th>Paciente</th>
+                        <th>Procedimento</th>
+                        <th>Executor</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Rascunho</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 
-    <!-- jQuery -->
-    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Login JS -->
-    <script src="/js/login-b6f1a0ed0e2a566bb9be564efdd3fee4.js"></script>
-</body>
-</html>
+    <!-- report-dashboard.js já carregado top-level em dashboard.html -->
+</div>

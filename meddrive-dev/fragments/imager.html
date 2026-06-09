@@ -1,0 +1,455 @@
+<div id="mainDashboardContent" data-imager-his-type="TASY_JAVA">        <!-- Navigation Header -->
+        <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas me-2 fa-images"></i>
+            <span>Dashboard Imager</span>
+        </a>
+        <div class="navbar-nav ms-auto">
+            <!-- Custom content (for special cases like status indicators) -->
+            
+
+            <!-- Default description span -->
+            <span class="navbar-text">
+                <i class="fas me-2 fa-hospital"></i>
+                <span>Gerenciamento de Imagens Médicas</span>
+            </span>
+        </div>
+    </div>
+</nav>
+
+        <!-- Imager Module CSS -->
+        <link rel="stylesheet" href="/css/imager-3ff00425ea48d1e11f89995f77291b1b.css">
+
+        <div class="container-fluid">
+            <!-- Alerts Container -->
+            <div id="alertsContainer" class="mb-4"></div>
+
+        <!-- Filters and Control Buttons -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <label for="groupFilter" class="form-label">Filtrar por Grupo:</label>
+                        <select id="groupFilter" class="form-select">
+                            <option value="">Todos os Grupos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="examFilter" class="form-label">Filtrar por Exame:</label>
+                        <select id="examFilter" class="form-select">
+                            <option value="">Todos os Exames</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="stepFilter" class="form-label">Filtrar por Etapa:</label>
+                        <select id="stepFilter" class="form-select">
+                            <option value="step1" selected>Pacientes Pendentes</option>
+                            <option value="step2">Imagens Pendentes</option>
+                            <option value="step3">Aprovações Pendentes</option>
+                            <option value="step4">Processados</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="dateFilter" class="form-label">Período <small class="text-muted">(Processados)</small>:</label>
+                        <select id="dateFilter" class="form-select">
+                            <option value="1">Último 1 dia</option>
+                            <option value="7" selected>Últimos 7 dias</option>
+                            <option value="14">Últimos 14 dias</option>
+                            <option value="30">Últimos 30 dias</option>
+                            <option value="60">Últimos 60 dias</option>
+                            <option value="90">Últimos 90 dias</option>
+                            <option value="">Todos os registros</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-end align-items-end h-100 flex-wrap gap-2">
+                    <div id="unlinkedOnlyFilterWrapper" class="form-check me-2" style="display: none;">
+                        <input class="form-check-input" type="checkbox" id="unlinkedOnlyFilter" checked>
+                        <label class="form-check-label" for="unlinkedOnlyFilter">Pendentes</label>
+                    </div>
+                    <button id="refreshImagerData" class="btn btn-primary">
+                        <i class="fas fa-refresh"></i> Atualizar
+                    </button>
+                    
+                    <button id="addPdfButton" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Adicionar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4" id="statsContainer">
+            <div class="col-md-3"
+         id="step1-patients-card">
+        <div class="card stats-card bg-primary text-white"
+             style="cursor: pointer;" onclick="applyStepFilter(&#39;step1&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Pacientes Pendentes</h6>
+                        <h4 class="stat-number mb-0">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-users"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-3"
+         id="step2-files-card">
+        <div class="card stats-card bg-info text-white"
+             style="cursor: pointer;" onclick="applyStepFilter(&#39;step2&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Imagens Pendentes</h6>
+                        <h4 class="stat-number mb-0">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-file-pdf"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-3"
+         id="step3-queue-card">
+        <div class="card stats-card bg-success text-white"
+             style="cursor: pointer;" onclick="applyStepFilter(&#39;step3&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Aprovações Pendentes</h6>
+                        <h4 class="stat-number mb-0">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-file-circle-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-3"
+         id="step4-processed-card">
+        <div class="card stats-card bg-warning text-dark"
+             style="cursor: pointer;" onclick="applyStepFilter(&#39;step4&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Processados</h6>
+                        <h4 class="stat-number mb-0">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+
+        <!-- Table Title -->
+        <div class="table-title-section mb-3">
+            <h5 id="tableTitle"><i class="fas fa-table"></i> Lista de Trabalho Imager - Todas as Etapas</h5>
+        </div>
+
+        <!-- Toolbar with controls -->
+        <div class="table-toolbar d-flex flex-row align-items-center justify-content-between gap-3 mb-3">
+
+        <!-- Items per page selector (left side) -->
+        <div class="d-flex align-items-center gap-2">
+            <label for="imagerItemsPerPageSelect"
+                   class="mb-0 text-nowrap"
+                   style="font-size: 0.875rem;">
+                Exibir:
+            </label>
+            <select class="form-select form-select-sm"
+                    id="imagerItemsPerPageSelect"
+                    style="width: 140px;">
+                <option value="10">10 itens</option>
+                <option value="25" selected="selected">25 itens</option>
+                <option value="50">50 itens</option>
+                <option value="100">100 itens</option>
+            </select>
+        </div>
+
+        <!-- Search Box (right side) -->
+        <div class="d-flex align-items-center gap-2">
+            <div style="width: 400px;">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text"
+                           class="form-control"
+                           id="imagerSearchInput"
+                           placeholder="Buscar..."
+                           autocomplete="off">
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="imagerClearSearchBtn"
+                            style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Worklist Table -->
+        <div class="table-responsive">
+            <table id="imagerWorklistTable" class="table table-hover">
+                <thead class="table-dark" id="tableHeader">                    <!-- Headers will be dynamically updated based on step filter -->
+                </thead>
+                <tbody>
+                    <!-- DataTable will populate this -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PDF Review Modal (Fullscreen) -->
+        <div class="modal fade" id="pdfReviewModal" tabindex="-1" aria-labelledby="pdfReviewModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header py-2">
+                        <h6 class="modal-title mb-0" id="pdfReviewModalLabel">
+                            <i class="fas fa-file-pdf me-2"></i>
+                            <span id="reviewPatientName">-</span>
+                        </h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body p-0 d-flex flex-column" style="height: calc(100vh - 70px);">
+                        <!-- Alerts Container for Modal Notifications -->
+                        <div id="modalAlertsContainer" style="position: absolute; bottom: 20px; left: 20px; z-index: 10000; max-width: 400px;"></div>
+
+                        <!-- Main Content Area -->
+                        <div class="d-flex flex-grow-1" style="overflow: hidden;">
+                        <!-- File List Sidebar (20%) - Fixed, with its own scroll -->
+                        <div class="border-end p-2 d-flex flex-column" style="width: 20%; overflow-y: auto; flex-shrink: 0; background-color: var(--modal-header-bg); border-color: var(--modal-border) !important;">
+                            <h6 class="mb-2 file-list-header" style="color: var(--text-primary);">Arquivos (<span id="reviewFileCount">0</span>)</h6>
+                            <div id="reviewFileList" class="list-group" style="overflow-y: auto; flex-grow: 1;">
+                                <!-- Files will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- PDF Viewer Area (80%) -->
+                        <div class="flex-grow-1 d-flex flex-column" style="width: 80%; overflow: hidden;">
+                            <div class="px-3 py-2 border-bottom" style="background-color: var(--modal-header-bg); border-color: var(--modal-border) !important;">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                    <!-- Left: Navigation arrows (more prominent) -->
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-outline-light btn-lg" id="btnPreviousFile" title="Arquivo Anterior (Seta Esquerda)">
+                                                <i class="fas fa-chevron-left fa-lg"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-light btn-lg" id="btnNextFile" title="Próximo Arquivo (Seta Direita)">
+                                                <i class="fas fa-chevron-right fa-lg"></i>
+                                            </button>
+                                        </div>
+                                        <div class="small fw-bold">
+                                            <span id="currentFileIndex">0</span> / <span id="totalFilesCount">0</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Center: Zoom & Rotate Controls -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-outline-light" id="btnZoomOut" title="Diminuir Zoom">
+                                                <i class="fas fa-search-minus fa-lg"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-light" id="btnZoomReset" title="Zoom Original (100%)">
+                                                <span id="zoomPercentage">100%</span>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-light" id="btnZoomIn" title="Aumentar Zoom">
+                                                <i class="fas fa-search-plus fa-lg"></i>
+                                            </button>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-light" id="btnRotatePdf" title="Rotacionar 90°">
+                                            <i class="fas fa-redo fa-lg"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Right: Action buttons -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-info" id="markedForApprovalCount">0 marcados</span>
+                                        <button type="button" class="btn btn-sm btn-primary" id="btnMarkForApproval" title="Marcar este arquivo para aprovação">
+                                            <i class="fas fa-check"></i> Marcar
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-primary d-none" id="btnUnmarkForApproval" title="Desmarcar este arquivo">
+                                            <i class="fas fa-times"></i> Desmarcar
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-primary" id="btnFinishReview" title="Concluir revisão e confirmar aprovações">
+                                            <i class="fas fa-clipboard-check"></i> Concluir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PDF Canvas Container -->
+                            <div id="pdfViewerContainer" class="flex-grow-1 d-flex align-items-start justify-content-center" style="overflow: auto; padding: 20px; background-color: var(--bg-body);">
+                                <canvas id="pdfCanvas"></canvas>
+                            </div>
+                        </div>
+                        </div> <!-- End main content area -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal for Final Approval -->
+        <div class="modal fade" id="approvalConfirmationModal" tabindex="-1" aria-labelledby="approvalConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title" id="approvalConfirmationModalLabel">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Aprovação
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Você marcou <strong><span id="confirmApprovalCount">0</span></strong> arquivo(s) para aprovar:</p>
+                        <ul id="confirmApprovalList" class="mb-3">
+                            <!-- List of files to be approved -->
+                        </ul>
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Esta ação irá consolidar os PDFs e avançar para a etapa de processamento.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                        <button type="button" class="btn btn-primary" id="btnConfirmApprovals">
+                            <i class="fas fa-check-circle"></i> Confirmar Aprovação
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div> <!-- End container-fluid -->
+
+        <!-- Add PDF Modal -->
+        <div class="modal fade" id="addPdfModal" tabindex="-1" aria-labelledby="addPdfModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPdfModalLabel">
+                            <i class="fas fa-upload me-2"></i>Adicionar PDF
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="addPdfExamSelect" class="form-label">Exame / Configuração *</label>
+                            <select class="form-select" id="addPdfExamSelect">
+                                <option value="">Carregando exames...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addPdfRepoSelect" class="form-label">Repositório de Arquivos *</label>
+                            <select class="form-select" id="addPdfRepoSelect" disabled>
+                                <option value="">Selecione primeiro um exame...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addPdfFileInput" class="form-label">Arquivo PDF *</label>
+                            <input type="file" class="form-control" id="addPdfFileInput" accept=".pdf">
+                            <div class="form-text">Apenas arquivos PDF são aceitos.</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="confirmAddPdfBtn">
+                            <i class="fas fa-upload me-1"></i>Enviar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Modal: Adicionar paciente manualmente ao worklist (apenas AMPLIMED) -->
+    <div class="modal fade" id="imagerManualOrderModal" tabindex="-1"
+         aria-labelledby="imagerManualOrderModalTitle" aria-hidden="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imagerManualOrderModalTitle">
+                        <i class="fas fa-user-plus me-2"></i>Adicionar paciente ao worklist
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <form id="imagerManualOrderForm">
+                    <div class="modal-body">
+                        <div id="imagerManualOrderAlerts"></div>
+
+                        <h6 class="text-muted mb-2"><i class="fas fa-user me-1"></i>Paciente</h6>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small">Nome completo <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="manualPatientName" required maxlength="255">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">CPF <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-sm" id="manualPatientNationalId" required maxlength="20" placeholder="000.000.000-00">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Data de nascimento <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control form-control-sm" id="manualPatientBirthDate" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Sexo</label>
+                                <select class="form-select form-select-sm" id="manualPatientSex">
+                                    <option value="">—</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
+                                    <option value="O">Outro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">RG (opcional)</label>
+                                <input type="text" class="form-control form-control-sm" id="manualPatientIdentityCard" maxlength="20">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label small">Telefone (opcional)</label>
+                                <input type="text" class="form-control form-control-sm" id="manualPatientPhone" maxlength="20" placeholder="(11) 99999-9999">
+                            </div>
+                        </div>
+
+                        <h6 class="text-muted mb-2"><i class="fas fa-vial me-1"></i>Exame</h6>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label small">Procedimento <span class="text-danger">*</span></label>
+                                <select class="form-select form-select-sm" id="manualExamConfigSelect" required>
+                                    <option value="">Carregando…</option>
+                                </select>
+                                <small class="text-muted">Procedimentos vêm das Configs do Imager ativas.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Data/hora do exame</label>
+                                <input type="datetime-local" class="form-control form-control-sm" id="manualOrderDateTime">
+                                <small class="text-muted">Se vazio, usa o momento atual.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Médico solicitante (opcional)</label>
+                                <input type="text" class="form-control form-control-sm" id="manualReferringPhysician" maxlength="255">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="imagerManualOrderSaveBtn" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>

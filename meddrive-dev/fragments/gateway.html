@@ -1,153 +1,283 @@
-<!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meddrive - Login</title>
+<div>
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas me-2 fa-chart-line"></i>
+            <span>Gateway - Dashboard</span>
+        </a>
+        <div class="navbar-nav ms-auto">
+            <!-- Custom content (for special cases like status indicators) -->
+            
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+            <!-- Default description span -->
+            <span class="navbar-text">
+                <i class="fas me-2 fa-file-pdf"></i>
+                <span>Processamento de Laudos com Controle de Tempo</span>
+            </span>
+        </div>
+    </div>
+</nav>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/webjars/font-awesome/6.4.0/css/all.min.css">
+    <div class="container-fluid">
+        <!-- Alerts Container -->
+        <div id="alertsContainer"></div>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/styles-53b7c733516de1d1ff148cf9efa3f89b.css">
-    <link rel="stylesheet" href="/css/light-theme-233e0eb8e345e2ea1649b6376bcf9c1f.css">
-    <link rel="stylesheet" href="/css/dark-theme-e8bd8ddc0e7e37f8d1b0c0470f387ba4.css">
+        <!-- Dashboard Tabs -->
+        <ul class="nav nav-tabs mb-3" id="gwDashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="gwTabReportsBtn" data-bs-toggle="tab"
+                        data-bs-target="#gwTabReports" type="button" role="tab"
+                        aria-controls="gwTabReports" aria-selected="true">
+                    <i class="fas fa-file-pdf me-2"></i>Reports
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="gwTabPatientLoginsLink" data-bs-toggle="tab"
+                        data-bs-target="#gwTabPatientLogins" type="button" role="tab"
+                        aria-controls="gwTabPatientLogins" aria-selected="false">
+                    <i class="fas fa-user-shield me-2"></i>Logins Pacientes
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="gwTabProviderLoginsLink" data-bs-toggle="tab"
+                        data-bs-target="#gwTabProviderLogins" type="button" role="tab"
+                        aria-controls="gwTabProviderLogins" aria-selected="false">
+                    <i class="fas fa-user-md me-2"></i>Logins Prestadores
+                </button>
+            </li>
+        </ul>
 
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-color, #f5f6fa);
-        }
-        .login-container {
-            width: 100%;
-            max-width: 440px;
-            padding: 2rem;
-        }
-        .login-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .login-header {
-            text-align: center;
-            padding: 2rem 2rem 1rem;
-        }
-        .login-header img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-        }
-        .login-header h4 {
-            margin-bottom: 0.25rem;
-            font-weight: 300;
-        }
-        .login-header .subtitle {
-            font-size: 0.85rem;
-            color: #6c757d;
-        }
-        .login-body {
-            padding: 1.5rem 2rem 2rem;
-        }
-        .profile-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .profile-option i {
-            width: 20px;
-            text-align: center;
-            color: #6c757d;
-        }
-        .no-profiles-msg {
-            text-align: center;
-            padding: 1rem;
-            color: #6c757d;
-        }
-        .credentials-section {
-            transition: opacity 0.3s ease;
-        }
-        .credentials-section.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="card login-card">
-            <div class="login-header">
-                <img src="/images/web-app-manifest-512x512.png" alt="Meddrive Logo">
-                <h4>Meddrive</h4>
-                <p class="subtitle">MIMPS - Medical Image Management & Processing System</p>
-            </div>
-            <div class="login-body">
-                <!-- Alert container -->
-                <div id="loginAlert"></div>
-
-                <!-- No profiles message (hidden by default) -->
-                <div id="noProfilesMsg" class="no-profiles-msg" style="display: none;">
-                    <i class="fas fa-exclamation-circle fa-2x mb-2 text-warning"></i>
-                    <p>Nenhum perfil configurado.<br>Contacte o administrador.</p>
-                </div>
-
-                <!-- Login form -->
-                <form id="loginForm" style="display: none;">
-                    <div class="mb-3">
-                        <label for="profileSelect" class="form-label">Perfil de Acesso</label>
-                        <select class="form-select" id="profileSelect" required>
-                            <option value="" disabled selected>Selecione um perfil...</option>
-                        </select>
-                    </div>
-
-                    <div id="credentialsSection" class="credentials-section disabled">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuário</label>
-                            <input type="text" class="form-control" id="username" placeholder="Digite seu usuário" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Senha</label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="password" placeholder="Digite sua senha" disabled>
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" disabled>
-                                    <i class="fas fa-eye"></i>
-                                </button>
+        <div class="tab-content">
+            <!-- Reports Tab (conteúdo existente) -->
+            <div class="tab-pane fade show active" id="gwTabReports" role="tabpanel" aria-labelledby="gwTabReportsBtn">
+                <!-- Filters and Action Buttons -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label for="gwDateFilter" class="form-label">Período:</label>
+                                <select id="gwDateFilter" class="form-select">
+                                    <option value="7" selected>Últimos 7 dias</option>
+                                    <option value="14">Últimos 14 dias</option>
+                                    <option value="30">Últimos 30 dias</option>
+                                    <option value="60">Últimos 60 dias</option>
+                                    <option value="90">Últimos 90 dias</option>
+                                    <option value="">Todos</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="gwStatusFilter" class="form-label">Status:</label>
+                                <select id="gwStatusFilter" class="form-select">
+                                    <option value="" selected>Todos</option>
+                                    <option value="PENDING">Pendente</option>
+                                    <option value="READY">Pronto</option>
+                                    <option value="DELIVERED">Enviado</option>
+                                    <option value="RETRY_EXHAUSTED">Retry Esgotado</option>
+                                    <option value="CANCELLED">Cancelado</option>
+                                    <option value="PORTAL_DELETED">Excluído do Portal</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary w-100 mt-2" id="loginBtn" disabled>
-                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
-                    </button>
-                </form>
-
-                <!-- Loading -->
-                <div id="loadingProfiles" class="text-center py-3">
-                    <div class="spinner-border spinner-border-sm text-primary" role="status">
-                        <span class="visually-hidden">Carregando...</span>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end align-items-end h-100 flex-wrap gap-2">
+                            <button type="button" class="btn btn-primary" onclick="refreshOrders()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="triggerPopulation()">
+                                <i class="fas fa-download"></i> Buscar Novos Laudos
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="triggerProcessing()">
+                                <i class="fas fa-play"></i> Processar Pendentes
+                            </button>
+                            <button type="button" class="btn btn-primary" id="processSelectedBtn" onclick="processSelected()">
+                                <i class="fas fa-paper-plane"></i> Enviar Selecionados
+                            </button>
+                        </div>
                     </div>
-                    <span class="ms-2 text-muted">Carregando perfis...</span>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+        <div class="card stats-card bg-primary text-white"
+             style="cursor: pointer;" onclick="gwFilterByStatus(&#39;&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total de Reports</h6>
+                        <h4 class="stat-number mb-0"
+                            id="gwTotalReports">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-file-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <div class="col-md-3">
+        <div class="card stats-card bg-warning text-white"
+             style="cursor: pointer;" onclick="gwFilterByStatus(&#39;PENDING_GROUP&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Aguardando Envio</h6>
+                        <h4 class="stat-number mb-0"
+                            id="gwPendingReports">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <div class="col-md-3">
+        <div class="card stats-card bg-success text-white"
+             style="cursor: pointer;" onclick="gwFilterByStatus(&#39;DELIVERED&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Enviados com Sucesso</h6>
+                        <h4 class="stat-number mb-0"
+                            id="gwSuccessReports">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <div class="col-md-3">
+        <div class="card stats-card bg-danger text-white"
+             style="cursor: pointer;" onclick="gwFilterByStatus(&#39;RETRY_EXHAUSTED&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Falhas</h6>
+                        <h4 class="stat-number mb-0"
+                            id="gwFailedReports">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-exclamation-triangle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                </div>
+
+                <!-- Table Title -->
+                <div class="table-title-section mb-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-list"></i> Reports de Processamento</h5>
+                </div>
+
+                <!-- Toolbar with controls -->
+                <div class="table-toolbar d-flex flex-row align-items-center justify-content-between gap-3 mb-3">
+
+        <!-- Items per page selector (left side) -->
+        <div class="d-flex align-items-center gap-2">
+            <label for="gatewayDashboardItemsPerPageSelect"
+                   class="mb-0 text-nowrap"
+                   style="font-size: 0.875rem;">
+                Exibir:
+            </label>
+            <select class="form-select form-select-sm"
+                    id="gatewayDashboardItemsPerPageSelect"
+                    style="width: 140px;">
+                <option value="10">10 itens</option>
+                <option value="25" selected="selected">25 itens</option>
+                <option value="50">50 itens</option>
+                <option value="100">100 itens</option>
+            </select>
+        </div>
+
+        <!-- Search Box (right side) -->
+        <div class="d-flex align-items-center gap-2">
+            <div style="width: 500px;">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text"
+                           class="form-control"
+                           id="gatewayDashboardSearchInput"
+                           placeholder="Buscar por paciente, procedimento, código..."
+                           autocomplete="off">
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="gatewayDashboardClearSearchBtn"
+                            style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Theme Manager -->
-    <script src="/js/theme-manager-a7e10798c3d2c652368ad84430194406.js"></script>
+                <div class="table-responsive">
+                    <table id="gatewayDashboardTable" class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th>ID</th>
+                                <th>Paciente</th>
+                                <th>Procedimento</th>
+                                <th>Data Liberação</th>
+                                <th>Envio Previsto</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be loaded via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    <!-- jQuery -->
-    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+            <!-- Patient Logins Tab (carregado via AJAX) -->
+            <div class="tab-pane fade" id="gwTabPatientLogins" role="tabpanel" aria-labelledby="gwTabPatientLoginsLink">
+                <div class="text-center py-5">
+                    <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+                    <p class="text-muted mt-2">Carregando...</p>
+                </div>
+            </div>
 
-    <!-- Bootstrap JS -->
-    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <!-- Provider Logins Tab (carregado via AJAX) -->
+            <div class="tab-pane fade" id="gwTabProviderLogins" role="tabpanel" aria-labelledby="gwTabProviderLoginsLink">
+                <div class="text-center py-5">
+                    <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+                    <p class="text-muted mt-2">Carregando...</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Login JS -->
-    <script src="/js/login-b6f1a0ed0e2a566bb9be564efdd3fee4.js"></script>
-</body>
-</html>
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">
+                        <i class="fas fa-info-circle"></i> Detalhes do Order
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detailsContent">
+                        <!-- Details will be loaded here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript initialized by dashboard.js calling initGatewayDashboard() -->
+</div>

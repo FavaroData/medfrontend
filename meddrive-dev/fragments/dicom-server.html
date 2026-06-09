@@ -1,153 +1,286 @@
-<!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meddrive - Login</title>
+<div>
+    <!-- Navigation Header with Server Status -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas me-2 fa-x-ray"></i>
+            <span>Dashboard DICOM Server</span>
+        </a>
+        <div class="navbar-nav ms-auto">
+            <!-- Custom content (for special cases like status indicators) -->
+            
+                <span id="dicom-navbar-status" class="navbar-text">
+            <i class="fas fa-server me-2"></i>
+            <span id="dicom-server-status-text">Carregando...</span>
+        </span>
+            
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+            <!-- Default description span -->
+            
+        </div>
+    </div>
+</nav>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/webjars/font-awesome/6.4.0/css/all.min.css">
+    <div class="container-fluid">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/styles-53b7c733516de1d1ff148cf9efa3f89b.css">
-    <link rel="stylesheet" href="/css/light-theme-233e0eb8e345e2ea1649b6376bcf9c1f.css">
-    <link rel="stylesheet" href="/css/dark-theme-e8bd8ddc0e7e37f8d1b0c0470f387ba4.css">
-
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-color, #f5f6fa);
-        }
-        .login-container {
-            width: 100%;
-            max-width: 440px;
-            padding: 2rem;
-        }
-        .login-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .login-header {
-            text-align: center;
-            padding: 2rem 2rem 1rem;
-        }
-        .login-header img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-        }
-        .login-header h4 {
-            margin-bottom: 0.25rem;
-            font-weight: 300;
-        }
-        .login-header .subtitle {
-            font-size: 0.85rem;
-            color: #6c757d;
-        }
-        .login-body {
-            padding: 1.5rem 2rem 2rem;
-        }
-        .profile-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .profile-option i {
-            width: 20px;
-            text-align: center;
-            color: #6c757d;
-        }
-        .no-profiles-msg {
-            text-align: center;
-            padding: 1rem;
-            color: #6c757d;
-        }
-        .credentials-section {
-            transition: opacity 0.3s ease;
-        }
-        .credentials-section.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="card login-card">
-            <div class="login-header">
-                <img src="/images/web-app-manifest-512x512.png" alt="Meddrive Logo">
-                <h4>Meddrive</h4>
-                <p class="subtitle">MIMPS - Medical Image Management & Processing System</p>
-            </div>
-            <div class="login-body">
-                <!-- Alert container -->
-                <div id="loginAlert"></div>
-
-                <!-- No profiles message (hidden by default) -->
-                <div id="noProfilesMsg" class="no-profiles-msg" style="display: none;">
-                    <i class="fas fa-exclamation-circle fa-2x mb-2 text-warning"></i>
-                    <p>Nenhum perfil configurado.<br>Contacte o administrador.</p>
+    <!-- Filters and Actions -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <label for="dicomDateFilter" class="form-label">Período:</label>
+                    <select id="dicomDateFilter" class="form-select">
+                        <option value="7" selected>Últimos 7 dias</option>
+                        <option value="14">Últimos 14 dias</option>
+                        <option value="30">Últimos 30 dias</option>
+                        <option value="60">Últimos 60 dias</option>
+                        <option value="90">Últimos 90 dias</option>
+                        <option value="">Todos</option>
+                    </select>
                 </div>
+                <div class="col-md-4">
+                    <label for="dicomImagerStatusFilter" class="form-label">Status Imager:</label>
+                    <select id="dicomImagerStatusFilter" class="form-select">
+                        <option value="" selected>Todos</option>
+                        <option value="MATCHED">Integrado</option>
+                        <option value="PENDING_GROUP">Pendente</option>
+                        <option value="ERROR_GROUP">Erro</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="dicomModalityFilter" class="form-label">Modalidade:</label>
+                    <select id="dicomModalityFilter" class="form-select">
+                        <option value="" selected>Todas</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="d-flex justify-content-end align-items-end h-100 flex-wrap gap-2">
+                <button class="btn btn-primary" id="refreshRecentExams">
+                    <i class="fas fa-sync-alt me-1"></i> Atualizar
+                </button>
+            </div>
+        </div>
+    </div>
 
-                <!-- Login form -->
-                <form id="loginForm" style="display: none;">
-                    <div class="mb-3">
-                        <label for="profileSelect" class="form-label">Perfil de Acesso</label>
-                        <select class="form-select" id="profileSelect" required>
-                            <option value="" disabled selected>Selecione um perfil...</option>
-                        </select>
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+        <div class="card stats-card bg-primary text-white"
+             style="cursor: pointer;" onclick="dicomFilterByImagerStatus(&#39;&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total de Exames</h6>
+                        <h4 class="stat-number mb-0"
+                            id="dicomTotalExams">-</h4>
                     </div>
-
-                    <div id="credentialsSection" class="credentials-section disabled">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuário</label>
-                            <input type="text" class="form-control" id="username" placeholder="Digite seu usuário" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Senha</label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="password" placeholder="Digite sua senha" disabled>
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" disabled>
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-folder-open"></i>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-3">
+        <div class="card stats-card bg-success text-white"
+             style="cursor: pointer;" onclick="dicomFilterByImagerStatus(&#39;MATCHED&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Integrados</h6>
+                        <h4 class="stat-number mb-0"
+                            id="dicomMatchedExams">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-3">
+        <div class="card stats-card bg-warning text-white"
+             style="cursor: pointer;" onclick="dicomFilterByImagerStatus(&#39;PENDING_GROUP&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Pendentes</h6>
+                        <h4 class="stat-number mb-0"
+                            id="dicomPendingExams">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-3">
+        <div class="card stats-card bg-danger text-white"
+             style="cursor: pointer;" onclick="dicomFilterByImagerStatus(&#39;ERROR_GROUP&#39;)">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Erros</h6>
+                        <h4 class="stat-number mb-0"
+                            id="dicomErrorExams">-</h4>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-2x fa-exclamation-triangle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
-                    <button type="submit" class="btn btn-primary w-100 mt-2" id="loginBtn" disabled>
-                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+    <!-- Table Title -->
+    <div class="table-title-section mb-3">
+        <h5 class="mb-0"><i class="fas fa-list"></i> Exames Recebidos</h5>
+    </div>
+
+    <!-- Toolbar with controls -->
+    <div class="table-toolbar d-flex flex-row align-items-center justify-content-between gap-3 mb-3">
+
+        <!-- Items per page selector (left side) -->
+        <div class="d-flex align-items-center gap-2">
+            <label for="dicomItemsPerPageSelect"
+                   class="mb-0 text-nowrap"
+                   style="font-size: 0.875rem;">
+                Exibir:
+            </label>
+            <select class="form-select form-select-sm"
+                    id="dicomItemsPerPageSelect"
+                    style="width: 140px;">
+                <option value="10">10 itens</option>
+                <option value="25" selected="selected">25 itens</option>
+                <option value="50">50 itens</option>
+                <option value="100">100 itens</option>
+            </select>
+        </div>
+
+        <!-- Search Box (right side) -->
+        <div class="d-flex align-items-center gap-2">
+            <div style="width: 400px;">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text"
+                           class="form-control"
+                           id="dicomSearchInput"
+                           placeholder="Pesquisar por paciente, ID ou nº acesso..."
+                           autocomplete="off">
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="dicomClearSearchBtn"
+                            style="display: none;">
+                        <i class="fas fa-times"></i>
                     </button>
-                </form>
-
-                <!-- Loading -->
-                <div id="loadingProfiles" class="text-center py-3">
-                    <div class="spinner-border spinner-border-sm text-primary" role="status">
-                        <span class="visually-hidden">Carregando...</span>
-                    </div>
-                    <span class="ms-2 text-muted">Carregando perfis...</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Theme Manager -->
-    <script src="/js/theme-manager-a7e10798c3d2c652368ad84430194406.js"></script>
+    <!-- Recent Exams Table -->
+    <div class="table-responsive">
+        <table class="table table-hover" id="recent-exams-table">
+            <thead class="table-dark">
+                <tr>
+                    <th>Data Estudo</th>
+                    <th>Nº Acesso</th>
+                    <th>Paciente</th>
+                    <th>Modalidade</th>
+                    <th>AE Origem</th>
+                    <th>Instâncias</th>
+                    <th>Imager</th>
+                    <th>Recebido</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="recent-exams-tbody">
+                <tr>
+                    <td colspan="9" class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <!-- jQuery -->
-    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+    <!-- Real-time Activity Feed -->
+    <div class="row mb-4" id="activity-feed-row" style="display: none;">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="fas fa-stream me-2"></i>
+                        Atividade em Tempo Real
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div id="activity-feed" class="activity-feed" style="max-height: 300px; overflow-y: auto;">
+                        <!-- Activity items will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Bootstrap JS -->
-    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    </div> <!-- End container-fluid -->
 
-    <!-- Login JS -->
-    <script src="/js/login-b6f1a0ed0e2a566bb9be564efdd3fee4.js"></script>
-</body>
-</html>
+    <!-- Modal for Error Details -->
+    <div class="modal fade" id="errorDetailsModal" tabindex="-1" aria-labelledby="errorDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorDetailsModalLabel">
+                        <i class="fas fa-exclamation-circle text-danger me-2"></i>
+                        Detalhes do Erro
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Erro:</strong>
+                        <span id="error-details-content">Nenhum erro selecionado.</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing Accession Number -->
+    <div class="modal fade" id="editAccessionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>Editar Nº Acesso
+                    </h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editAccessionExamId">
+                    <div class="mb-2">
+                        <label for="editAccessionInput" class="form-label">Nº Acesso</label>
+                        <input type="text" class="form-control" id="editAccessionInput" maxlength="32" placeholder="Nº Acesso">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="saveAccessionBtn">
+                        <i class="fas fa-save me-1"></i>Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
