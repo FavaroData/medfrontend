@@ -1,14 +1,15 @@
 /**
- * dev-override.js v3
+ * dev-override.js v4
  * Intercepta fetch e $.ajax para que o dashboard funcione
  * sem o backend Spring Boot rodando.
+ * Serve todos os fragments de todas as abas.
  */
 (function () {
     'use strict';
 
     const _fetch = window.fetch.bind(window);
 
-    // ── Dados estáticos ────────────────────────────────────────────────────
+    // ── Dados estáticos worklist ───────────────────────────────────────────
     const WORKLIST_DATA = [
         { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Joseane Aparecida Lopes", dtNascimento: "1968-04-16", cpf: "74019597987", procedureName: "Angiofluoresceinografia - Monocular", nrAtendimento: "181781", nrPrescricao: "324121", nrSeqPrescricao: "1", accessionNumber: "3241211", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
         { orderDateTime: "2026-06-09T08:19:00", nmPaciente: "Alvisio Ribeiro da Silva", dtNascimento: "1942-03-11", cpf: "03311090934", procedureName: "Retinografia - Monocular", nrAtendimento: "181780", nrPrescricao: "324120", nrSeqPrescricao: "2", accessionNumber: "3241202", referringPhysician: "Aramis de Castro Bach", stepStatus: "step1", dsStatus: "Pendente" },
@@ -29,9 +30,9 @@
         { orderDateTime: "2026-05-20T13:01:00", nmPaciente: "Lais do Rocio Anachewski", dtNascimento: "1954-09-25", cpf: "23233397968", procedureName: "Paquimetria Ultra-Sônica - Monocular", nrAtendimento: "180283", nrPrescricao: "322563", nrSeqPrescricao: "4", accessionNumber: "3225634", referringPhysician: "Virginia Santos de Paula Soares Pilati", stepStatus: "step1", dsStatus: "Pendente" }
     ];
 
-    // ── Respostas JSON mock ────────────────────────────────────────────────
+    // ── Mocks de API ───────────────────────────────────────────────────────
     const JSON_MOCKS = {
-        '/api/imager/exam-groups': { data: [] },
+        '/api/imager/exam-groups': [],
         '/api/imager/exams': [
             { name: "Angiofluoresceinografia", id: 126 },
             { name: "Angiografia OCT", id: 125 },
@@ -55,41 +56,55 @@
         '/api/imager/processing-exams/ui/stats': { total: 4, pending: 4 },
         '/api/imager/processing-exams/ui/step4/stats': { total: 14747 },
         '/api/gateway/failure-count': { count: 0 },
+        '/api/gateway/fragments/config': {},
         '/api/dicom/failure-count': { count: 0 },
     };
 
-    // ── Prefixos que devem retornar {} silenciosamente ─────────────────────
+    // ── Mapeamento fragment URL → arquivo local ────────────────────────────
+    const FRAGMENT_MAP = {
+        '/fragments/home-dashboard': 'fragments/home.html',
+        '/dicom/fragments/dashboard-data': 'fragments/dicom-server.html',
+        '/dicom-worklist/fragments/dashboard-data': 'fragments/dicom-worklist.html',
+        '/imager/fragments/dashboard-data': 'fragments/imager.html',
+        '/api/gateway/fragments/dashboard': 'fragments/gateway.html',
+        '/report/fragments/dashboard': 'fragments/report.html',
+        '/admin/configurations-fragment': 'fragments/admin.html',
+        '/imager/config/dashboard': 'fragments/imager-config.html',
+    };
+
+    // ── Prefixos silenciosos ───────────────────────────────────────────────
     const SILENT_PREFIXES = [
         '/api/auth',
-        '/api/gateway',
-        '/api/dicom',
-        '/fragments/home',
-        '/dicom',
-        '/gateway',
-        '/report',
-        '/admin',
-        '/configurations',
         '/i18n/',
+        '/report/fragments/review-list',
+        '/configurations',
     ];
 
     // ── Helpers ────────────────────────────────────────────────────────────
-    function json(obj) {
+    function jsonResp(obj) {
         return new Response(JSON.stringify(obj), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
         });
     }
 
-    function html(body) {
+    function htmlResp(body) {
         return new Response(body, {
             status: 200,
             headers: { 'Content-Type': 'text/html; charset=utf-8' }
         });
     }
 
-    function matchesMock(url) {
-        for (const key of Object.keys(JSON_MOCKS)) {
-            if (url.includes(key)) return JSON_MOCKS[key];
+    function matchFragment(url) {
+        for (const [pattern, file] of Object.entries(FRAGMENT_MAP)) {
+            if (url.includes(pattern)) return file;
+        }
+        return null;
+    }
+
+    function matchMock(url) {
+        for (const [pattern, data] of Object.entries(JSON_MOCKS)) {
+            if (url.includes(pattern)) return data;
         }
         return null;
     }
@@ -100,10 +115,6 @@
 
     function isDataTable(url) {
         return url.includes('/api/imager/') && url.includes('datatable');
-    }
-
-    function isImagerFragment(url) {
-        return url.includes('/imager/fragments/dashboard-data');
     }
 
     function buildDatatableResponse(urlStr) {
@@ -124,30 +135,40 @@
         }
 
         const total = filtered.length;
-        return json({ draw, recordsTotal: total, recordsFiltered: total, data: filtered.slice(start, start + length) });
+        return jsonResp({
+            draw,
+            recordsTotal: total,
+            recordsFiltered: total,
+            data: filtered.slice(start, start + length)
+        });
     }
 
     // ── Intercepta fetch ───────────────────────────────────────────────────
     window.fetch = function (input, init) {
         const url = typeof input === 'string' ? input : input.url;
 
-        if (isImagerFragment(url)) {
-            return _fetch('imager-fragment.html').catch(() =>
-                html('<p class="text-muted m-4">fragment não encontrado</p>')
+        // Fragment local
+        const fragmentFile = matchFragment(url);
+        if (fragmentFile) {
+            return _fetch(fragmentFile).catch(() =>
+                htmlResp('<p class="text-muted m-4">Fragment não encontrado: ' + fragmentFile + '</p>')
             );
         }
 
+        // DataTable
         if (isDataTable(url)) {
             return Promise.resolve(buildDatatableResponse(url));
         }
 
-        const mock = matchesMock(url);
-        if (mock) {
-            return Promise.resolve(json(mock));
+        // Mock JSON
+        const mock = matchMock(url);
+        if (mock !== null) {
+            return Promise.resolve(jsonResp(mock));
         }
 
+        // Silencioso
         if (isSilent(url)) {
-            return Promise.resolve(json({}));
+            return Promise.resolve(jsonResp({}));
         }
 
         return _fetch(input, init);
@@ -160,8 +181,8 @@
             const opts = (typeof url === 'object') ? url : (options || {});
             const reqUrl = (typeof url === 'string') ? url : (opts.url || '');
 
-            const mock = matchesMock(reqUrl);
-            if (mock) {
+            const mock = matchMock(reqUrl);
+            if (mock !== null) {
                 const d = jQuery.Deferred();
                 setTimeout(() => d.resolve(mock), 0);
                 return d.promise();
@@ -177,20 +198,12 @@
         };
     }
 
-    // ── Silencia o loop de cleanupImagerDashboard ──────────────────────────
-    // O dashboard.js chama cleanupImagerDashboard antes de carregar o fragment,
-    // mas como o fragment carrega via fetch assíncrono a tabela ainda não existe.
-    // Sobrescrevemos para evitar o erro de parentNode null.
-    window._origCleanup = window.cleanupImagerDashboard;
+    // ── Silencia erro de cleanup do DataTables ─────────────────────────────
+    const _origCleanup = window.cleanupImagerDashboard;
     window.cleanupImagerDashboard = function () {
-        try {
-            if (typeof window._origCleanup === 'function') {
-                window._origCleanup();
-            }
-        } catch (e) {
-            // silencia erro de parentNode null durante cleanup
-        }
+        try { if (typeof _origCleanup === 'function') _origCleanup(); }
+        catch (e) { /* parentNode null durante navegação */ }
     };
 
-    console.log('[dev-override] v3 ativo');
+    console.log('[dev-override] v4 ativo — todos os fragments mapeados');
 })();

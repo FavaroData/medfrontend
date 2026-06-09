@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meddrive - Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/webjars/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/styles-53b7c733516de1d1ff148cf9efa3f89b.css">
+    <link rel="stylesheet" href="/css/light-theme-233e0eb8e345e2ea1649b6376bcf9c1f.css">
+    <link rel="stylesheet" href="/css/dark-theme-e8bd8ddc0e7e37f8d1b0c0470f387ba4.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color, #f5f6fa);
+        }
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 2rem;
+        }
+        .login-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .login-header {
+            text-align: center;
+            padding: 2rem 2rem 1rem;
+        }
+        .login-header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+        .login-header h4 {
+            margin-bottom: 0.25rem;
+            font-weight: 300;
+        }
+        .login-header .subtitle {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        .login-body {
+            padding: 1.5rem 2rem 2rem;
+        }
+        .profile-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .profile-option i {
+            width: 20px;
+            text-align: center;
+            color: #6c757d;
+        }
+        .no-profiles-msg {
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+        }
+        .credentials-section {
+            transition: opacity 0.3s ease;
+        }
+        .credentials-section.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="card login-card">
+            <div class="login-header">
+                <img src="/images/web-app-manifest-512x512.png" alt="Meddrive Logo">
+                <h4>Meddrive</h4>
+                <p class="subtitle">MIMPS - Medical Image Management & Processing System</p>
+            </div>
+            <div class="login-body">
+                <!-- Alert container -->
+                <div id="loginAlert"></div>
+
+                <!-- No profiles message (hidden by default) -->
+                <div id="noProfilesMsg" class="no-profiles-msg" style="display: none;">
+                    <i class="fas fa-exclamation-circle fa-2x mb-2 text-warning"></i>
+                    <p>Nenhum perfil configurado.<br>Contacte o administrador.</p>
+                </div>
+
+                <!-- Login form -->
+                <form id="loginForm" style="display: none;">
+                    <div class="mb-3">
+                        <label for="profileSelect" class="form-label">Perfil de Acesso</label>
+                        <select class="form-select" id="profileSelect" required>
+                            <option value="" disabled selected>Selecione um perfil...</option>
+                        </select>
+                    </div>
+
+                    <div id="credentialsSection" class="credentials-section disabled">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Usuário</label>
+                            <input type="text" class="form-control" id="username" placeholder="Digite seu usuário" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Senha</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" placeholder="Digite sua senha" disabled>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" disabled>
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mt-2" id="loginBtn" disabled>
+                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                    </button>
+                </form>
+
+                <!-- Loading -->
+                <div id="loadingProfiles" class="text-center py-3">
+                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <span class="ms-2 text-muted">Carregando perfis...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Manager -->
+    <script src="/js/theme-manager-a7e10798c3d2c652368ad84430194406.js"></script>
+
+    <!-- jQuery -->
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Login JS -->
+    <script src="/js/login-b6f1a0ed0e2a566bb9be564efdd3fee4.js"></script>
+</body>
+</html>
