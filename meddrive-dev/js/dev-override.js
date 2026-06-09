@@ -182,6 +182,7 @@
             const reqUrl = (typeof url === 'string') ? url : (opts.url || '');
 
             if (isDataTable(reqUrl)) {
+                console.log('[dev-override] DataTable ajax interceptado:', reqUrl, 'data:', opts.data, 'success?', typeof opts.success);
                 const d = jQuery.Deferred();
                 const dataParams = opts.data || {};
                 const queryStr = typeof dataParams === 'string' ? dataParams
@@ -189,7 +190,9 @@
                 const sep = reqUrl.includes('?') ? '&' : '?';
                 const fullUrl = queryStr ? reqUrl + sep + queryStr : reqUrl;
                 const data = buildDatatableData(fullUrl);
+                console.log('[dev-override] DataTable mock data:', data.recordsTotal, 'rows, stepFilter=', new URL(fullUrl, 'http://localhost').searchParams.get('stepFilter'));
                 setTimeout(function () {
+                    console.log('[dev-override] DataTable setTimeout disparado, chamando success...');
                     if (typeof opts.success === 'function') opts.success(data);
                     d.resolve(data);
                 }, 0);
